@@ -1,5 +1,5 @@
-from .utils import SHEET, valid_number_input
-
+from .utils import SHEET, CROPS, valid_number_input
+from .crop import Crop, Tree
 
 class Field():
     
@@ -39,24 +39,45 @@ class Fields():
         while True:
             print("Fields")
             for index in range(0, 5):
-                print(f"Field {index + 1}:  {(self.fields[index].crop if self.fields[index].crop else 'EMPTY') if len(self.fields) >= index + 1 else f'€{self.prices[index]}'}")
+                print(f"Field {index + 1}:  {(self.fields[index].crop if self.fields[index].crop else 'READY TO PLANT') if len(self.fields) >= index + 1 else f'€{self.prices[index]}'}")
 
             print("1: Unlock new field")
             print("2: Plant crops")
             print("0: Go Back")
             user_input = valid_number_input("What would you like to do?: ", 0, 2)
             if user_input == 1:
-                # TODO: Confirm unlock
-                if player.money >= self.prices[len(self.fields)]:
-                    player.money -= self.prices[len(self.fields)]
-                    self.unlock_new_field()
-                else:
-                    print("Insufficient funds!")
-                    input("Press Enter to continue.")
+                self.unlock_new_field(player)
             elif user_input == 2:
-                print("Assign crop")
+                self.assign_crops()
             else:
                 break
 
-    def unlock_new_field(self):
-        self.fields.append(Field(None, 0, self.storage))
+    def unlock_new_field(self, player):
+        # TODO: Confirm unlock
+        if player.money >= self.prices[len(self.fields)]:
+            player.money -= self.prices[len(self.fields)]
+            self.fields.append(Field(None, 0, self.storage))
+        else:
+            print("Insufficient funds!")
+            input("Press Enter to continue.")
+
+    def assign_crops(self):
+        while True:
+            for index, field in enumerate(self.fields):
+                print(f"{index + 1}: Field {index + 1} - {field.crop.name if field.is_filled() else 'EMPTY'}")
+            print("0: Go Back")
+            selected_field = valid_number_input("Select a field: ", 0, len(self.fields))
+            if selected_field == 0:
+                break
+            while True:
+                self.storage.display_available_seeds()
+                print("0: Go Back")
+                selected_crop = valid_number_input("What crop would you like to plant?: ", 0, 5)
+                if selected_crop == 0:
+                    break
+                if self.storage.available_seeds(CROPS[selected_crop-1]) == 0:
+                    print("Not enough seeds. Go to Store to buy more.")
+                    input("Press Enter to continue.")
+                else:
+                    # TODO: Assign Crop to field
+                    break

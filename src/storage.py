@@ -13,6 +13,10 @@ class Storage():
     def add_seeds(self, crop, amount):
         self.seeds[crop] = self.seeds[crop] + amount
 
+    def display_available_seeds(self):
+        for index, crop in enumerate(self.seeds):
+            print(f"{index + 1}:  {crop}: {self.seeds[crop]}")
+
     def display_storage_menu(self):
         for crop, amount in self.seeds.items():
             print(f"{crop}: {amount}")
