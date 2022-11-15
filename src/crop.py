@@ -1,9 +1,8 @@
 class Crop():
-    def __init__(self, name, reward, harvest_time, storage):
+    def __init__(self, name, reward, harvest_time):
         self.name = name
         self.reward = reward
         self.harvest_time = harvest_time
-        self.storage = storage
 
     def is_ripe(self, month):
         return month % self.harvest_time == 0
