@@ -1,10 +1,11 @@
 from random import choice
 from string import ascii_uppercase
+from utils import SHEET
 
 
 class Game:
-    def __init__(self, games_sheet, new_game):
-        self.games_sheet = games_sheet
+    def __init__(self, new_game):
+        self.games_sheet = SHEET.worksheet("games")
         if new_game:
             self.new_game()
         else:
