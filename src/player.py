@@ -14,6 +14,7 @@ class Player():
         self.fertiliser = Fertiliser(0)
         self.fields = [Field(None, 0, self.storage)]
         self.store = Store()
+
     def prepare_next_season(self):
         while True:
             print("1: Open Storage")
@@ -25,15 +26,19 @@ class Player():
             user_input = valid_number_input("What would you like to do next?: ", 0, 5)
             
             if user_input == 1:
-                # TODO: Open Storage
+                self.storage.display_storage()
             elif user_input == 2:
                 # TODO: Open Fertiliser
+                print("Fertiliser")
             elif user_input == 3:
                 self.store.buy_seeds(self)
             elif user_input == 4:
                 # TODO: Open Fields
+                print("Fields")
             elif user_input == 5:
                 # TODO: Start season
+                print("Start")
             else:
                 # TODO: Save Game and show main screen
+                print("Main")
 

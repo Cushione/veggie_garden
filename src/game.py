@@ -10,6 +10,7 @@ class Game:
             self.new_game()
         else:
             self.load_game()
+        self.player.prepare_next_season()
 
     def new_game(self):
         self.username = valid_string_input("Please enter your username: ", 3, 20)

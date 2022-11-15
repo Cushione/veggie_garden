@@ -12,3 +12,10 @@ class Storage():
 
     def add_seeds(self, crop, amount):
         self.seeds[crop] = self.seeds[crop] + amount
+
+    def display_storage(self):
+        for crop, amount in self.seeds.items():
+            print(f"{crop}: {amount}")
+        
+        input("Press Enter to go back. ")
+        
