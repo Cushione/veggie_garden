@@ -13,7 +13,7 @@ class Storage():
     def add_seeds(self, crop, amount):
         self.seeds[crop] = self.seeds[crop] + amount
 
-    def display_storage(self):
+    def display_storage_menu(self):
         for crop, amount in self.seeds.items():
             print(f"{crop}: {amount}")
         

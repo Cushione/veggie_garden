@@ -26,10 +26,9 @@ class Player():
             user_input = valid_number_input("What would you like to do next?: ", 0, 5)
             
             if user_input == 1:
-                self.storage.display_storage()
+                self.storage.display_storage_menu()
             elif user_input == 2:
-                # TODO: Open Fertiliser
-                print("Fertiliser")
+                self.fertiliser.display_fertiliser_menu(self)
             elif user_input == 3:
                 self.store.buy_seeds(self)
             elif user_input == 4:
