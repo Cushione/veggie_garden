@@ -16,3 +16,18 @@ SHEET = GSPREAD_CLIENT.open("veggie_garden")
 
 crops_sheet = SHEET.worksheet("crops")
 CROPS = crops_sheet.col_values(1)[1:]
+
+
+def valid_number_input(prompt, minimum, maximum):
+    while True:
+        user_input = input(prompt)
+        try:
+            user_input = int(user_input.strip())
+        except ValueError:
+            print(f"Please type in a valid number ({minimum}-{maximum}).")
+            continue
+        if user_input >= minimum and user_input <= maximum:
+            break
+        else:
+            print(f"Please type in a valid number ({minimum}-{maximum}).")
+    return user_input
