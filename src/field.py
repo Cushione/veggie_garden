@@ -39,7 +39,7 @@ class Fields():
         while True:
             print("Fields")
             for index in range(0, 5):
-                print(f"Field {index + 1}:  {(self.fields[index].crop if self.fields[index].crop else 'READY TO PLANT') if len(self.fields) >= index + 1 else f'€{self.prices[index]}'}")
+                print(f"Field {index + 1}:  {(self.fields[index].crop if self.fields[index].crop.name else 'READY TO PLANT') if len(self.fields) >= index + 1 else f'€{self.prices[index]}'}")
 
             print("1: Unlock new field")
             print("2: Plant crops")
@@ -79,5 +79,5 @@ class Fields():
                     print("Not enough seeds. Go to Store to buy more.")
                     input("Press Enter to continue.")
                 else:
-                    # TODO: Assign Crop to field
+                    self.fields[selected_field-1].crop = self.storage.take_seed(selected_crop - 1)
                     break
