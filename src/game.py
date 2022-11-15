@@ -1,7 +1,7 @@
 from random import choice
 from string import ascii_uppercase
-from utils import SHEET
-
+from .utils import SHEET
+from .player import Player
 
 class Game:
     def __init__(self, new_game):
@@ -14,6 +14,7 @@ class Game:
     def new_game(self):
         self.username = input("Please enter your username: ")
         self.id = "".join(choice(ascii_uppercase) for i in range(6))
+        self.player = Player(20)
         self.save_game(False)
 
     def load_game(self):
