@@ -31,3 +31,12 @@ def valid_number_input(prompt, minimum, maximum):
         else:
             print(f"Please type in a valid number ({minimum}-{maximum}).")
     return user_input
+
+def valid_string_input(prompt, minimum, maximum):
+    while True:
+        user_input = input(prompt).strip()
+        if len(user_input) >= minimum and len(user_input) <= maximum:
+            break
+        else:
+            print(f"Please type in a valid string ({minimum}-{maximum} characters).")
+    return user_input
