@@ -9,8 +9,8 @@ class Crop():
 
 
 class Tree(Crop):
-    def __init__(self, name, reward, harvest_time, planted, storage):
-        super().__init__(name, reward, harvest_time, storage)
+    def __init__(self, name, reward, harvest_time, planted):
+        super().__init__(name, reward, harvest_time)
         self.planted = planted
 
     def is_ripe(self, month):

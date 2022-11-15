@@ -15,5 +15,4 @@ SHEET = GSPREAD_CLIENT.open("veggie_garden")
 
 
 crops_sheet = SHEET.worksheet("crops")
-crop_names = crops_sheet.col_values(1)
-CROPS = Enum("CROPS", crop_names)
+CROPS = crops_sheet.col_values(1)[1:]
