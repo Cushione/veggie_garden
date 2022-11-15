@@ -1,7 +1,7 @@
 from .events import Events
 from .storage import Storage
 from .fertiliser import Fertiliser
-from .field import Field
+from .field import Field, Fields
 from .store import Store
 from .utils import valid_number_input
 
@@ -12,7 +12,7 @@ class Player():
         self.events = Events()
         self.storage = Storage([0, 0, 0, 0, 0])
         self.fertiliser = Fertiliser(0)
-        self.fields = [Field(None, 0, self.storage)]
+        self.fields = Fields([[None, 0]], self.storage)
         self.store = Store()
 
     def prepare_next_season(self):
@@ -32,8 +32,7 @@ class Player():
             elif user_input == 3:
                 self.store.buy_seeds(self)
             elif user_input == 4:
-                # TODO: Open Fields
-                print("Fields")
+                self.fields.display_field_menu(self)
             elif user_input == 5:
                 # TODO: Start season
                 print("Start")
