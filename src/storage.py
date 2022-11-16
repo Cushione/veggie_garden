@@ -27,11 +27,11 @@ class Storage():
 
     def display_available_seeds(self):
         for index, crop in enumerate(self.seeds):
-            print(f"{index + 1}:  {crop}: {self.seeds[crop]}")
+            print(f"{index + 1}: {crop.capitalize().ljust(9)}: {self.seeds[crop]}")
 
     def display_storage_menu(self):
         for crop, amount in self.seeds.items():
-            print(f"{crop}: {amount}")
+            print(f"{crop.capitalize().ljust(9)}: {amount}")
         
         input("Press Enter to go back. ")
         

@@ -1,6 +1,6 @@
 from random import choice
 from string import ascii_uppercase
-from .utils import SHEET, valid_string_input
+from .utils import SHEET, valid_string_input, press_enter
 from .player import Player
 
 class Game:
@@ -15,6 +15,10 @@ class Game:
     def new_game(self):
         self.username = valid_string_input("Please enter your username: ", 3, 20)
         self.id = "".join(choice(ascii_uppercase) for i in range(6))
+        print(f"Your game ID is: {self.id}")
+        print("Please write it down so you can resume your game again later.")
+        press_enter()
+        print("Loading...")
         self.player = Player(20)
         self.save_game(False)
 
@@ -34,11 +38,11 @@ class Game:
             self.games_sheet.append_row([self.id, self.username, 0, 0])
 
     def play_game(self):
-        self.player.prepare_next_season()
-        self.show_game_results()
+        if self.player.prepare_next_season():
+            self.show_game_results()
 
     def show_game_results(self):
         print("Congratulations!")
         print(f"You have finished the game with €{self.player.money}!")
         print("Go to Leaderboard for Highscores.")
-        input("Press Enter to continue")
+        press_enter()

@@ -3,7 +3,7 @@ from .storage import Storage
 from .fertiliser import Fertiliser
 from .field import Field, Garden
 from .store import Store
-from .utils import valid_number_input
+from .utils import valid_number_input, press_enter, MONTHS
 import time
 
 
@@ -38,29 +38,36 @@ class Player():
             elif user_input == 5:
                 self.work_season()
             else:
-                # TODO: Save Game and show main screen
-                print("Main")
+                # TODO: Save Game
+                return False
 
             if self.month == 60:
-                break
+                return True
 
     def work_season(self):
         for month in range(6):
-            print(f"Starting month {month}")
-            time.sleep(1)
+            print(f"--- {MONTHS[month]} ---")
+            time.sleep(0.5)
             self.month += 1
+            if not any([field.is_filled() for field in self.garden.fields]):
+                print("All fields are empty.")
+                time.sleep(1)
+                continue
             for index, field in enumerate(self.garden.fields):
                 if not field.is_filled():
                     continue
                 print(f"Tending to field {index + 1}")
+                time.sleep(0.5)
                 field.tend(self.month)
                 time.sleep(1)
-        input("Season over. Press Enter to see your profits.")
+        
+        print(f"\n--- End of Year {int(self.month / 6)} ---\n")
+        input("Press Enter to see your profits.")
         self.season_overview()
         
         for field in self.garden.fields:
             self.money += field.seasonal_harvest
-            field.seasonal_harvest = 0
+            field.plow()
 
     def season_overview(self):
         event = self.events.get_random_event()
@@ -69,5 +76,5 @@ class Player():
             event.adjust_harvest(self.garden.fields)
 
         for index, field in enumerate(self.garden.fields):
-            print(f"Field {index + 1}: {f'{field.assigned_crop.name}'.ljust(8)} - €{field.seasonal_harvest}")
-        input("Press Enter to prepare for the next season.")
+            print(f"Field {index + 1}: {field.assigned_crop.name.capitalize().ljust(9) if field.assigned_crop else 'EMPTY'.ljust(9)}: €{field.seasonal_harvest}")
+        press_enter()

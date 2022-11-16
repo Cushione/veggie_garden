@@ -17,6 +17,7 @@ SHEET = GSPREAD_CLIENT.open("veggie_garden")
 crops_sheet = SHEET.worksheet("crops")
 CROPS = crops_sheet.col_values(1)[1:]
 
+MONTHS = ["April", "May", "June", "July", "August", "September"]
 
 def valid_number_input(prompt, minimum, maximum):
     while True:
@@ -40,3 +41,19 @@ def valid_string_input(prompt, minimum, maximum):
         else:
             print(f"Please type in a valid string ({minimum}-{maximum} characters).")
     return user_input
+
+def valid_confirm_input(prompt):
+    while True:
+        user_input = input(prompt).strip().lower()
+        if user_input in ["yes", "y"]:
+            result = True
+            break
+        elif user_input in ["no", "n"]:
+            result = False
+            break
+        else:
+            print("Please type either yes/y or no/n.")
+    return result
+
+def press_enter():
+    input("Press Enter to continue.")

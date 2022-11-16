@@ -1,4 +1,4 @@
-from .utils import SHEET, CROPS, valid_number_input
+from .utils import SHEET, CROPS, valid_number_input, valid_confirm_input, press_enter
 from .crop import Crop, Tree
 import time
 
@@ -20,7 +20,7 @@ class Field():
     def tend(self, month):
         if self.is_filled() and self.crop.is_ripe(month):
             print(f"Harvesting {self.crop.name}.")
-            time.sleep(1)
+            time.sleep(0.5)
             self.seasonal_harvest += self.fertiliser.improve_harvest(self.crop.harvest(month)) 
             if not self.crop.perennial and month % 6 != 0:
                 if self.storage.available_seeds(self.crop.name) > 0:
@@ -32,7 +32,7 @@ class Field():
             else:
                 self.crop = None
         elif self.is_filled():
-            print(f"{self.crop.name} is not ripe yet.")
+            print(f"{self.crop.name.capitalize()} is not ripe yet.")
 
     def is_filled(self):
         return self.crop is not None
@@ -40,6 +40,11 @@ class Field():
     def assign_crop(self, crop):
         self.crop = crop
         self.assigned_crop = crop
+
+    def plow(self):
+        self.seasonal_harvest = 0
+        if self.assigned_crop and not self.assigned_crop.perennial:
+            self.assigned_crop = None
 
 class Garden():
 
@@ -56,32 +61,33 @@ class Garden():
         while True:
             print("Fields")
             for index in range(0, 5):
-                print(f"Field {index + 1}:  {(self.fields[index].crop.name if self.fields[index].crop else 'READY TO PLANT') if len(self.fields) >= index + 1 else f'€{self.prices[index]}'}")
+                print(f"Field {index + 1} : {(self.fields[index].crop.name.capitalize() if self.fields[index].crop else 'READY TO PLANT') if len(self.fields) >= index + 1 else f'€{self.prices[index]}'}")
 
-            print("1: Unlock new field")
-            print("2: Plant crops")
+            print("1: Plant crops")
+            print("2: Unlock new field")
             print("0: Go Back")
             user_input = valid_number_input("What would you like to do?: ", 0, 2)
             if user_input == 1:
-                self.unlock_new_field(player)
-            elif user_input == 2:
                 self.assign_crops(player)
+            elif user_input == 2:
+                self.unlock_new_field(player)
             else:
                 break
 
     def unlock_new_field(self, player):
-        # TODO: Confirm unlock
-        if player.money >= self.prices[len(self.fields)]:
-            player.money -= self.prices[len(self.fields)]
-            self.fields.append(Field(None, 0, self.storage, player.fertiliser))
-        else:
-            print("Insufficient funds!")
-            input("Press Enter to continue.")
+        price = self.prices[len(self.fields)]
+        if valid_confirm_input(f"Are you sure you want to unlock the next field for €{price}?: "):
+            if player.money >= price:
+                player.money -= price
+                self.fields.append(Field(None, 0, self.storage, player.fertiliser))
+            else:
+                print("Insufficient funds!")
+                press_enter()
 
     def assign_crops(self, player):
         while True:
             for index, field in enumerate(self.fields):
-                print(f"{index + 1}: Field {index + 1} - {field.crop.name if field.is_filled() else 'EMPTY'}")
+                print(f"{index + 1}: Field {index + 1} : {field.crop.name.capitalize() if field.is_filled() else 'EMPTY'}")
             print("0: Go Back")
             selected_field = valid_number_input("Select a field: ", 0, len(self.fields))
             if selected_field == 0:
@@ -94,7 +100,7 @@ class Garden():
                     break
                 if self.storage.available_seeds(CROPS[selected_crop-1]) == 0:
                     print("Not enough seeds. Go to Store to buy more.")
-                    input("Press Enter to continue.")
+                    press_enter()
                 else:
                     crop = self.storage.take_seed(CROPS[selected_crop - 1])
                     crop.plant(player.month)
