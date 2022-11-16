@@ -22,13 +22,15 @@ class Field():
             print(f"Harvesting {self.crop.name}.")
             time.sleep(1)
             self.seasonal_harvest += self.fertiliser.improve_harvest(self.crop.harvest(month)) 
-            if not self.crop.perennial:
+            if not self.crop.perennial and month % 6 != 0:
                 if self.storage.available_seeds(self.crop.name) > 0:
                     print(f"Replanting {self.crop.name}.")
                     self.storage.take_seed(self.crop.name)
                 else:
                     print(f"No more {self.crop.name} seeds to plant.")  
                     self.crop = None
+            else:
+                self.crop = None
         elif self.is_filled():
             print(f"{self.crop.name} is not ripe yet.")
 
