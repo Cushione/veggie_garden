@@ -17,14 +17,13 @@ class Storage():
     def add_seeds(self, crop, amount):
         self.seeds[crop] += amount
 
-    def take_seed(self, index):
-        name = self.names[index]
+    def take_seed(self, name):
         self.seeds[name] -= 1
         crop = self.crops[name]
         if name == self.names[-1]:
-            return Tree(crop[0], crop[2], crop[3])
+            return Tree(crop[0], int(crop[2]), int(crop[3]))
         else:
-            return Crop(crop[0], crop[2], crop[3])
+            return Crop(crop[0], int(crop[2]), int(crop[3]))
 
     def display_available_seeds(self):
         for index, crop in enumerate(self.seeds):

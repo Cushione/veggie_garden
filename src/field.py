@@ -1,6 +1,6 @@
 from .utils import SHEET, CROPS, valid_number_input
 from .crop import Crop, Tree
-
+import time
 
 class Field():
 
@@ -9,23 +9,35 @@ class Field():
             crop
         except NameError:
             self.crop = None
+            self.assigned_crop = None
         else:
             self.crop = crop
+            self.assigned_crop = crop
         self.seasonal_harvest = seasonal_harvest
         self.storage = storage
 
     def tend(self, month):
         if self.is_filled() and self.crop.is_ripe(month):
-            self.seasonal_harvest += self.crop.harvest()
+            print(f"Harvesting {self.crop.name}.")
+            time.sleep(1)
+            if not self.crop.perennial:
             if self.storage.available_seeds(self.crop.name) > 0:
-                self.storage.take_seeds(self.crop.name)
+                    print(f"Replanting {self.crop.name}.")
+                    self.storage.take_seed(self.crop.name)
             else:
+                    print(f"No more {self.crop.name} seeds to plant.")  
                 self.crop = None
+        elif self.is_filled():
+            print(f"{self.crop.name} is not ripe yet.")
 
     def is_filled(self):
         return self.crop is not None
 
-class Fields():
+    def assign_crop(self, crop):
+        self.crop = crop
+        self.assigned_crop = crop
+
+class Garden():
 
     def __init__(self, fields_data, storage):
         self.fields = [Field(crop, seasonal_harvest, storage) for crop, seasonal_harvest in fields_data]
@@ -40,7 +52,7 @@ class Fields():
         while True:
             print("Fields")
             for index in range(0, 5):
-                print(f"Field {index + 1}:  {(self.fields[index].crop if self.fields[index].crop.name else 'READY TO PLANT') if len(self.fields) >= index + 1 else f'€{self.prices[index]}'}")
+                print(f"Field {index + 1}:  {(self.fields[index].crop.name if self.fields[index].crop else 'READY TO PLANT') if len(self.fields) >= index + 1 else f'€{self.prices[index]}'}")
 
             print("1: Unlock new field")
             print("2: Plant crops")
@@ -80,7 +92,7 @@ class Fields():
                     print("Not enough seeds. Go to Store to buy more.")
                     input("Press Enter to continue.")
                 else:
-                    crop = self.storage.take_seed(selected_crop - 1)
+                    crop = self.storage.take_seed(CROPS[selected_crop - 1])
                     crop.plant(player.month)
-                    self.fields[selected_field-1].crop = crop
+                    self.fields[selected_field-1].assign_crop(crop)
                     break

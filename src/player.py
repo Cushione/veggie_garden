@@ -47,11 +47,19 @@ class Player():
             time.sleep(1)
             self.month += 1
             for index, field in enumerate(self.garden.fields):
+                if not field.is_filled():
+                    continue
                 print(f"Tending to field {index + 1}")
                 field.tend(self.month)
                 time.sleep(1)
-        input("Season over.")
+        input("Season over. Press Enter to see your profits.")
+        self.show_profits()
         
         for field in self.garden.fields:
             self.money += field.seasonal_harvest
             field.seasonal_harvest = 0
+
+    def show_profits(self):
+        for index, field in enumerate(self.garden.fields):
+            print(f"Field {index + 1}: {f'{field.assigned_crop.name}'.ljust(8)} - €{field.seasonal_harvest}")
+        input("Press Enter to prepare for the next season.")

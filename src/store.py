@@ -10,25 +10,31 @@ class Store:
         return [int(price) for price in prices_sheet.col_values(2)[1:]]
 
     def buy_seeds(self, player):
-        success = False
-        while not success:
+        while True:
             self.show_stock()
-            selected_index = self.select_crop() - 1
+            print("0: Go back")
+            selected_index = self.select_crop()
 
-            if player.money < self.prices[selected_index]:
+            if selected_index == 0:
+                break
+
+            selected_crop = selected_index - 1
+
+            if player.money < self.prices[selected_crop]:
                 print("You cannot afford this packet of seeds!")
                 continue
             amount, total_price = self.select_amount(
-                selected_index, player.money
+                selected_crop, player.money
             )
 
             confirm = input(
-                f"Are you sure you want to buy {amount} packets of {CROPS[selected_index]} for €{total_price}?: "
+                f"Are you sure you want to buy {amount} packets of {CROPS[selected_crop]} for €{total_price}?: "
             )
+            # TODO: Implement proper confirm
             if confirm == "y":
                 player.money -= total_price
-                player.storage.add_seeds(CROPS[selected_index], amount)
-                success = True
+                player.storage.add_seeds(CROPS[selected_crop], amount)
+                break
             else:
                 continue
 
@@ -37,7 +43,7 @@ class Store:
             print(f"{index + 1}. {crop} - €{self.prices[index]}")
 
     def select_crop(self):
-        return valid_number_input("What would you like to buy? (1-5): ", 1, 5)
+        return valid_number_input("What would you like to buy?: ", 0, 5)
 
     def select_amount(self, selected_index, budget):
         valid_amount = False
