@@ -1,9 +1,10 @@
 from .events import Events
 from .storage import Storage
 from .fertiliser import Fertiliser
-from .field import Field, Fields
+from .field import Field, Garden
 from .store import Store
 from .utils import valid_number_input
+import time
 
 
 class Player():
@@ -13,7 +14,7 @@ class Player():
         self.events = Events()
         self.storage = Storage([0, 0, 0, 0, 0])
         self.fertiliser = Fertiliser(0)
-        self.fields = Fields([[None, 0]], self.storage)
+        self.garden = Garden([[None, 0]], self.storage)
         self.store = Store()
 
     def prepare_next_season(self):
@@ -33,11 +34,24 @@ class Player():
             elif user_input == 3:
                 self.store.buy_seeds(self)
             elif user_input == 4:
-                self.fields.display_field_menu(self)
+                self.garden.display_field_menu(self)
             elif user_input == 5:
-                # TODO: Start season
-                print("Start")
+                self.work_season()
             else:
                 # TODO: Save Game and show main screen
                 print("Main")
 
+    def work_season(self):
+        for month in range(6):
+            print(f"Starting month {month}")
+            time.sleep(1)
+            self.month += 1
+            for index, field in enumerate(self.garden.fields):
+                print(f"Tending to field {index + 1}")
+                field.tend(self.month)
+                time.sleep(1)
+        input("Season over.")
+        
+        for field in self.garden.fields:
+            self.money += field.seasonal_harvest
+            field.seasonal_harvest = 0
