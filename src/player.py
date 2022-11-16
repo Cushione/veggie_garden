@@ -41,6 +41,9 @@ class Player():
                 # TODO: Save Game and show main screen
                 print("Main")
 
+            if self.month == 60:
+                break
+
     def work_season(self):
         for month in range(6):
             print(f"Starting month {month}")

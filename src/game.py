@@ -10,7 +10,7 @@ class Game:
             self.new_game()
         else:
             self.load_game()
-        self.player.prepare_next_season()
+        self.play_game()
 
     def new_game(self):
         self.username = valid_string_input("Please enter your username: ", 3, 20)
@@ -32,3 +32,13 @@ class Game:
             self.games_sheet.update(f"c{row}:d{row}", [["1", "1"]])
         else:
             self.games_sheet.append_row([self.id, self.username, 0, 0])
+
+    def play_game(self):
+        self.player.prepare_next_season()
+        self.show_game_results()
+
+    def show_game_results(self):
+        print("Congratulations!")
+        print(f"You have finished the game with €{self.player.money}!")
+        print("Go to Leaderboard for Highscores.")
+        input("Press Enter to continue")
