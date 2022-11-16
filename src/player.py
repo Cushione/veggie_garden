@@ -53,13 +53,18 @@ class Player():
                 field.tend(self.month)
                 time.sleep(1)
         input("Season over. Press Enter to see your profits.")
-        self.show_profits()
+        self.season_overview()
         
         for field in self.garden.fields:
             self.money += field.seasonal_harvest
             field.seasonal_harvest = 0
 
-    def show_profits(self):
+    def season_overview(self):
+        event = self.events.get_random_event()
+        if event is not None:
+            print(event.description)
+            event.adjust_harvest(self.garden.fields)
+
         for index, field in enumerate(self.garden.fields):
             print(f"Field {index + 1}: {f'{field.assigned_crop.name}'.ljust(8)} - €{field.seasonal_harvest}")
         input("Press Enter to prepare for the next season.")
