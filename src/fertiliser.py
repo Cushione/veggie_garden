@@ -10,10 +10,13 @@ class Fertiliser():
     def load_fertiliser_data(self):
         fertiliser_sheet = SHEET.worksheet("fertiliser")
         self.prices = [int(price) for price in fertiliser_sheet.col_values(2)[1:]]
-        self.rewards = fertiliser_sheet.col_values(3)[1:]
+        self.rewards = [float(reward) for reward in fertiliser_sheet.col_values(3)[1:]]
 
     def upgrade(self):
         self.level += 1
+
+    def improve_harvest(self, harvest):
+        return round(harvest * self.rewards[self.level])
 
     def display_fertiliser_menu(self, player):
         while True:

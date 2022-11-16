@@ -4,7 +4,7 @@ import time
 
 class Field():
 
-    def __init__(self, crop, seasonal_harvest, storage):
+    def __init__(self, crop, seasonal_harvest, storage, fertiliser):
         try:
             crop
         except NameError:
@@ -15,18 +15,20 @@ class Field():
             self.assigned_crop = crop
         self.seasonal_harvest = seasonal_harvest
         self.storage = storage
+        self.fertiliser = fertiliser
 
     def tend(self, month):
         if self.is_filled() and self.crop.is_ripe(month):
             print(f"Harvesting {self.crop.name}.")
             time.sleep(1)
+            self.seasonal_harvest += self.fertiliser.improve_harvest(self.crop.harvest(month)) 
             if not self.crop.perennial:
-            if self.storage.available_seeds(self.crop.name) > 0:
+                if self.storage.available_seeds(self.crop.name) > 0:
                     print(f"Replanting {self.crop.name}.")
                     self.storage.take_seed(self.crop.name)
-            else:
+                else:
                     print(f"No more {self.crop.name} seeds to plant.")  
-                self.crop = None
+                    self.crop = None
         elif self.is_filled():
             print(f"{self.crop.name} is not ripe yet.")
 
@@ -39,8 +41,8 @@ class Field():
 
 class Garden():
 
-    def __init__(self, fields_data, storage):
-        self.fields = [Field(crop, seasonal_harvest, storage) for crop, seasonal_harvest in fields_data]
+    def __init__(self, fields_data, storage, fertiliser):
+        self.fields = [Field(crop, seasonal_harvest, storage, fertiliser) for crop, seasonal_harvest in fields_data]
         self.load_prices()
         self.storage = storage
 
@@ -69,7 +71,7 @@ class Garden():
         # TODO: Confirm unlock
         if player.money >= self.prices[len(self.fields)]:
             player.money -= self.prices[len(self.fields)]
-            self.fields.append(Field(None, 0, self.storage))
+            self.fields.append(Field(None, 0, self.storage, player.fertiliser))
         else:
             print("Insufficient funds!")
             input("Press Enter to continue.")
