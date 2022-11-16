@@ -1,8 +1,9 @@
 from .utils import SHEET, CROPS, valid_number_input
 from .crop import Crop, Tree
 
+
 class Field():
-    
+
     def __init__(self, crop, seasonal_harvest, storage):
         try:
             crop
@@ -48,7 +49,7 @@ class Fields():
             if user_input == 1:
                 self.unlock_new_field(player)
             elif user_input == 2:
-                self.assign_crops()
+                self.assign_crops(player)
             else:
                 break
 
@@ -61,7 +62,7 @@ class Fields():
             print("Insufficient funds!")
             input("Press Enter to continue.")
 
-    def assign_crops(self):
+    def assign_crops(self, player):
         while True:
             for index, field in enumerate(self.fields):
                 print(f"{index + 1}: Field {index + 1} - {field.crop.name if field.is_filled() else 'EMPTY'}")
@@ -79,5 +80,7 @@ class Fields():
                     print("Not enough seeds. Go to Store to buy more.")
                     input("Press Enter to continue.")
                 else:
-                    self.fields[selected_field-1].crop = self.storage.take_seed(selected_crop - 1)
+                    crop = self.storage.take_seed(selected_crop - 1)
+                    crop.plant(player.month)
+                    self.fields[selected_field-1].crop = crop
                     break

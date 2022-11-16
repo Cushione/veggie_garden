@@ -7,8 +7,9 @@ from .utils import valid_number_input
 
 
 class Player():
-    def __init__(self, money=20):
+    def __init__(self, money=20, month=0):
         self.money = money
+        self.month = month
         self.events = Events()
         self.storage = Storage([0, 0, 0, 0, 0])
         self.fertiliser = Fertiliser(0)
