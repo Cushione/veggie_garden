@@ -9,13 +9,13 @@ import time
 
 
 class Player():
-    def __init__(self, game, money=20, month=0):
+    def __init__(self, game, money=20, month=0, seeds=[0, 0, 0, 0, 0], fertiliser=0, fields=[-1]):
         self.money = money
         self.month = month
         self.events = Events()
-        self.storage = Storage([0, 0, 0, 0, 0])
-        self.fertiliser = Fertiliser(0)
-        self.garden = Garden([None], self.storage, self.fertiliser)
+        self.storage = Storage(seeds)
+        self.fertiliser = Fertiliser(fertiliser)
+        self.garden = Garden(fields, self.storage, self.fertiliser)
         self.store = Store()
         self.game = game
 
@@ -42,7 +42,7 @@ class Player():
             elif user_input == 5:
                 new_page(self.game, *Text.NEXT_SEASON)
                 if valid_confirm_input("Are you sure you want to start the next season?: "):
-                self.work_season()
+                    self.work_season()
             else:
                 return False
 
@@ -85,7 +85,7 @@ class Player():
             print(event.description)
             event.adjust_harvest(self.garden.fields)
         total_profit = 0
-        for index, field in enumerate(self.garden.fields):
+        for index, field in enumerate(self.garden.fields): 
             print(f"Field {index + 1}: {field.assigned_crop.name.capitalize().ljust(9) if field.assigned_crop else 'EMPTY'.ljust(9)}: {f'€{field.seasonal_harvest}'.rjust(7)}")
             total_profit += field.seasonal_harvest
         print("---------------------------")

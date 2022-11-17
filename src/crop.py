@@ -19,9 +19,9 @@ class Crop():
 
 
 class Tree(Crop):
-    def __init__(self, name, reward, harvest_time):
+    def __init__(self, name, reward, harvest_time, planted=None):
         super().__init__(name, reward, harvest_time)
-        self.planted = None
+        self.planted = planted
         self.perennial = True
 
     def is_ripe(self, month):

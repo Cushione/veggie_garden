@@ -4,7 +4,7 @@ from .utils import SHEET, new_page, Text, print_error, valid_number_input, valid
 class Garden():
 
     def __init__(self, fields_data, storage, fertiliser):
-        self.fields = [Field(crop, storage, fertiliser) for crop in fields_data]
+        self.fields = [Field(status, storage, fertiliser) for status in fields_data if status >= -1]
         self.load_prices()
         self.storage = storage
 
@@ -35,7 +35,7 @@ class Garden():
         if valid_confirm_input(f"Are you sure you want to unlock the next field for €{price}?: "):
             if player.money >= price:
                 player.money -= price
-                self.fields.append(Field(None, self.storage, player.fertiliser))
+                self.fields.append(Field(-1, self.storage, player.fertiliser))
             else:
                 print_error("Insufficient funds!")
                 press_enter()

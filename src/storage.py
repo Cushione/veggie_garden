@@ -19,11 +19,17 @@ class Storage():
 
     def take_seed(self, name):
         self.seeds[name] -= 1
-        crop = self.crops[name]
-        if name == self.names[-1]:
-            return Tree(crop[0], int(crop[2]), int(crop[3]))
-        else:
-            return Crop(crop[0], int(crop[2]), int(crop[3]))
+        return self.create_crop(self.names.index(name))
+
+    def create_crop(self, value):
+        if value > 3:
+            planted = int(value / 6) * 6
+            index = value % 6
+            name = self.names[index]
+            return Tree(name, int(self.crops[name][2]), int(self.crops[name][3]), planted)
+        name = self.names[value]
+        return Crop(name, int(self.crops[name][2]), int(self.crops[name][3]))
+            
 
     def display_available_seeds(self):
         for index, crop in enumerate(self.seeds):

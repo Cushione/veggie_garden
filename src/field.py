@@ -3,18 +3,17 @@ import time
 
 class Field():
 
-    def __init__(self, crop, storage, fertiliser):
-        try:
-            crop
-        except NameError:
-            self.crop = None
-            self.assigned_crop = None
-        else:
-            self.crop = crop
-            self.assigned_crop = crop
+    def __init__(self, status, storage, fertiliser):
         self.seasonal_harvest = 0
         self.storage = storage
         self.fertiliser = fertiliser
+        if status == -1:
+            self.crop = None
+            self.assigned_crop = None
+        else:
+            crop = self.storage.create_crop(status)
+            self.crop = crop
+            self.assigned_crop = crop
 
     def tend(self, month):
         if self.is_filled() and self.crop.is_ripe(month):

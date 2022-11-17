@@ -1,6 +1,6 @@
 from random import choice
 from string import ascii_uppercase
-from .utils import SHEET, valid_string_input, press_enter, new_page, Colors, colored_string, Text
+from .utils import SHEET, valid_string_input, press_enter, new_page, Colors, colored_string, Text, print_error, valid_confirm_input
 from .player import Player
 
 class Game:
@@ -10,7 +10,6 @@ class Game:
             self.new_game()
         else:
             self.load_game()
-        self.play_game()
 
     def new_game(self):
         new_page(None, *Text.USERNAME)
@@ -20,15 +19,30 @@ class Game:
         press_enter()
         new_page(None)
         print(colored_string(Colors.yellow, "Loading..."))
-        self.player = Player(self, 20)
+        self.player = Player(self)
         self.save_game(False)
+        self.play_game()
 
     def load_game(self):
-        prev_id = input("Please enter your id: ")
-        prev_game_row = self.games_sheet.find(prev_id).row
-        prev_game = self.games_sheet.row_values(prev_game_row)
-        self.id = prev_game[0]
-        self.username = prev_game[1]
+        while True:
+            prev_id = valid_string_input("Please enter your id: ", 6, 6).upper()
+            prev_game = self.games_sheet.find(prev_id)
+            if prev_game is None:
+                print_error("Could not find any game with this ID")
+                if not valid_confirm_input("Would you like to try again?: "):
+                    break
+            else:
+                break
+        if prev_game is None:
+            return
+        data = self.games_sheet.row_values(prev_game.row)
+        data = [int(value) if index > 1 else value for index, value in enumerate(data)]
+        self.id = data[0]
+        self.username = data[1]
+        new_page(None)
+        print(colored_string(Colors.yellow, "Loading..."))
+        self.player = Player(self, data[2], data[3], [data[i] for i in range(5, 10)], data[4], [data[i] for i in range(10, 15)])
+        self.play_game()
 
     def save_game(self, update=True):
         game_data = [self.id, self.username, *self.player.get_progress()]
