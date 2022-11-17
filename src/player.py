@@ -15,7 +15,7 @@ class Player():
         self.events = Events()
         self.storage = Storage([0, 0, 0, 0, 0])
         self.fertiliser = Fertiliser(0)
-        self.garden = Garden([[None, 0]], self.storage)
+        self.garden = Garden([None], self.storage, self.fertiliser)
         self.store = Store()
         self.game = game
 

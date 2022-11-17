@@ -4,7 +4,7 @@ from .utils import SHEET, new_page, Text, print_error, valid_number_input, valid
 class Garden():
 
     def __init__(self, fields_data, storage, fertiliser):
-        self.fields = [Field(crop, seasonal_harvest, storage, fertiliser) for crop, seasonal_harvest in fields_data]
+        self.fields = [Field(crop, storage, fertiliser) for crop in fields_data]
         self.load_prices()
         self.storage = storage
 

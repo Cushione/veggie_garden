@@ -1,10 +1,9 @@
-from .utils import SHEET, CROPS, valid_number_input, valid_confirm_input, press_enter, new_page, Text, print_error
 from .crop import Crop, Tree
 import time
 
 class Field():
 
-    def __init__(self, crop, seasonal_harvest, storage, fertiliser):
+    def __init__(self, crop, storage, fertiliser):
         try:
             crop
         except NameError:
@@ -13,7 +12,7 @@ class Field():
         else:
             self.crop = crop
             self.assigned_crop = crop
-        self.seasonal_harvest = seasonal_harvest
+        self.seasonal_harvest = 0
         self.storage = storage
         self.fertiliser = fertiliser
 
