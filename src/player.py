@@ -82,7 +82,11 @@ class Player():
         if event is not None:
             print(event.description)
             event.adjust_harvest(self.garden.fields)
-
+        total_profit = 0
         for index, field in enumerate(self.garden.fields):
-            print(f"Field {index + 1}: {field.assigned_crop.name.capitalize().ljust(9) if field.assigned_crop else 'EMPTY'.ljust(9)}: €{field.seasonal_harvest}")
+            print(f"Field {index + 1}: {field.assigned_crop.name.capitalize().ljust(9) if field.assigned_crop else 'EMPTY'.ljust(9)}: {f'€{field.seasonal_harvest}'.rjust(7)}")
+            total_profit += field.seasonal_harvest
+        print("---------------------------")
+        
+        print(f"Total Profit:{f'€{total_profit}'.rjust(14)}")
         press_enter()
