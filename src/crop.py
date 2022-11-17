@@ -14,6 +14,9 @@ class Crop():
     def harvest(self, month):
         return self.reward if self.is_ripe(month) else 0
 
+    def not_ripe(self, month):
+        print(f"{self.name.capitalize()} is not ripe yet.")
+
 
 class Tree(Crop):
     def __init__(self, name, reward, harvest_time):
@@ -26,3 +29,9 @@ class Tree(Crop):
 
     def plant(self, month):
         self.planted = month
+
+    def not_ripe(self, month):
+        if month % 6 != 0:
+            print(f"{self.name.capitalize()} is not ripe yet.")
+        else:
+            print(f"{self.name.capitalize()} grew a little.")

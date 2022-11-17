@@ -1,4 +1,4 @@
-from .utils import SHEET, CROPS, valid_number_input, valid_confirm_input, press_enter, new_page
+from .utils import SHEET, CROPS, valid_number_input, valid_confirm_input, press_enter, new_page, Text, print_error
 from .crop import Crop, Tree
 import time
 
@@ -22,17 +22,18 @@ class Field():
             print(f"Harvesting {self.crop.name}.")
             time.sleep(0.5)
             self.seasonal_harvest += self.fertiliser.improve_harvest(self.crop.harvest(month)) 
-            if not self.crop.perennial and month % 6 != 0:
-                if self.storage.available_seeds(self.crop.name) > 0:
-                    print(f"Replanting {self.crop.name}.")
-                    self.storage.take_seed(self.crop.name)
+            if not self.crop.perennial:
+                if month % 6 != 0:
+                    if self.storage.available_seeds(self.crop.name) > 0:
+                        print(f"Replanting {self.crop.name}.")
+                        self.storage.take_seed(self.crop.name)
+                    else:
+                        print(f"No more {self.crop.name} seeds to plant.")  
+                        self.crop = None
                 else:
-                    print(f"No more {self.crop.name} seeds to plant.")  
                     self.crop = None
-            else:
-                self.crop = None
         elif self.is_filled():
-            print(f"{self.crop.name.capitalize()} is not ripe yet.")
+            self.crop.not_ripe(month)
 
     def is_filled(self):
         return self.crop is not None
@@ -59,12 +60,11 @@ class Garden():
 
     def display_field_menu(self, player):
         while True:
-            new_page(player.game)
-            print("Fields")
+            new_page(player.game, *Text.FIELDS)
             for index in range(0, 5):
                 print(f"Field {index + 1} : {(self.fields[index].crop.name.capitalize() if self.fields[index].crop else 'READY TO PLANT') if len(self.fields) >= index + 1 else f'€{self.prices[index]}'}")
 
-            print("1: Plant crops")
+            print("\n1: Plant crops")
             print("2: Unlock new field")
             print("0: Go Back")
             user_input = valid_number_input("What would you like to do?: ", 0, 2)
@@ -76,20 +76,19 @@ class Garden():
                 break
 
     def unlock_new_field(self, player):
-        new_page(player.game)
+        new_page(player.game, *Text.UNLOCK_NEW_FIELD)
         price = self.prices[len(self.fields)]
         if valid_confirm_input(f"Are you sure you want to unlock the next field for €{price}?: "):
             if player.money >= price:
                 player.money -= price
                 self.fields.append(Field(None, 0, self.storage, player.fertiliser))
             else:
-                new_page(player.game)
-                print("Insufficient funds!")
+                print_error("Insufficient funds!")
                 press_enter()
 
     def assign_crops(self, player):
         while True:
-            new_page(player.game)
+            new_page(player.game, *Text.ASSIGN_CROPS)
             for index, field in enumerate(self.fields):
                 print(f"{index + 1}: Field {index + 1} : {field.crop.name.capitalize() if field.is_filled() else 'EMPTY'}")
             print("0: Go Back")
@@ -99,15 +98,14 @@ class Garden():
             elif self.fields[selected_field-1].is_filled() and not valid_confirm_input("Are you sure you want to plant a new crop in this field? Your current crop will be lost.: "):
                 continue
             while True:
-                new_page(player.game)
+                new_page(player.game, Text.AVAILABLE_SEEDS)
                 self.storage.display_available_seeds()
                 print("0: Go Back")
                 selected_crop = valid_number_input("What crop would you like to plant?: ", 0, 5)
                 if selected_crop == 0:
                     break
                 if self.storage.available_seeds(CROPS[selected_crop-1]) == 0:
-                    new_page(player.game)
-                    print("Not enough seeds. Go to Store to buy more.")
+                    print_error("Not enough seeds. Go to Store to buy more.")
                     press_enter()
                 else:
                     crop = self.storage.take_seed(CROPS[selected_crop - 1])
