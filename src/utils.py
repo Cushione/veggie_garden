@@ -36,7 +36,7 @@ def valid_number_input(prompt, minimum, maximum):
 
 def valid_string_input(prompt, minimum, maximum):
     while True:
-        user_input = input(colored_string(Colors.yellow, f"\n{prompt}").strip())
+        user_input = input(colored_string(Colors.yellow, f"\n{prompt}")).strip()
         if len(user_input) >= minimum and len(user_input) <= maximum:
             break
         else:
@@ -45,7 +45,7 @@ def valid_string_input(prompt, minimum, maximum):
 
 def valid_confirm_input(prompt):
     while True:
-        user_input = input(colored_string(Colors.yellow, f"\n{prompt}").strip().lower())
+        user_input = input(colored_string(Colors.yellow, f"\n{prompt}")).strip().lower()
         if user_input in ["yes", "y"]:
             result = True
             break

@@ -96,6 +96,8 @@ class Garden():
             selected_field = valid_number_input("Select a field: ", 0, len(self.fields))
             if selected_field == 0:
                 break
+            elif self.fields[selected_field-1].is_filled() and not valid_confirm_input("Are you sure you want to plant a new crop in this field? Your current crop will be lost.: "):
+                continue
             while True:
                 new_page(player.game)
                 self.storage.display_available_seeds()

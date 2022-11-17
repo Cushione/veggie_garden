@@ -3,7 +3,7 @@ from .storage import Storage
 from .fertiliser import Fertiliser
 from .field import Field, Garden
 from .store import Store
-from .utils import valid_number_input, press_enter, MONTHS, new_page, colored_string, Colors
+from .utils import valid_number_input, press_enter, MONTHS, new_page, colored_string, Colors, valid_confirm_input
 import time
 
 
@@ -39,6 +39,7 @@ class Player():
             elif user_input == 4:
                 self.garden.display_field_menu(self)
             elif user_input == 5:
+                if valid_confirm_input("Are you sure you want to start the next season?: "):
                 self.work_season()
             else:
                 # TODO: Save Game
