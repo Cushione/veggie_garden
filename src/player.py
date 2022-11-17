@@ -1,7 +1,8 @@
 from .events import Events
 from .storage import Storage
 from .fertiliser import Fertiliser
-from .field import Field, Garden
+from .field import Field
+from .garden import Garden
 from .store import Store
 from .utils import valid_number_input, press_enter, MONTHS, new_page, colored_string, Colors, valid_confirm_input, Text
 import time
