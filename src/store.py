@@ -1,4 +1,4 @@
-from .utils import SHEET, CROPS, valid_number_input, valid_confirm_input, press_enter
+from .utils import SHEET, CROPS, valid_number_input, valid_confirm_input, press_enter, new_page
 
 
 class Store:
@@ -11,6 +11,7 @@ class Store:
 
     def buy_seeds(self, player):
         while True:
+            new_page(player.game)
             self.show_stock()
             print("0: Go back")
             selected_index = self.select_crop()
@@ -21,6 +22,7 @@ class Store:
             selected_crop = selected_index - 1
 
             if player.money < self.prices[selected_crop]:
+                new_page(player.game)
                 print("You cannot afford this packet of seeds!")
                 press_enter()
                 continue
@@ -28,6 +30,7 @@ class Store:
                 selected_crop, player.money
             )
 
+            new_page(player.game)
             if valid_confirm_input(
                 f"Are you sure you want to buy {amount} packets of {CROPS[selected_crop]} for €{total_price}?: "
             ):
@@ -44,7 +47,7 @@ class Store:
 
     def select_amount(self, selected_index, budget):
         while True:
-            amount = valid_number_input("How many packets would you like to buy?: ", 1, 99)
+            amount = valid_number_input("\nHow many packets would you like to buy?: ", 1, 99)
             total_price = self.prices[selected_index] * amount
             if budget >= total_price:
                 break

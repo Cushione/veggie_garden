@@ -3,12 +3,12 @@ from .storage import Storage
 from .fertiliser import Fertiliser
 from .field import Field, Garden
 from .store import Store
-from .utils import valid_number_input, press_enter, MONTHS
+from .utils import valid_number_input, press_enter, MONTHS, new_page
 import time
 
 
 class Player():
-    def __init__(self, money=20, month=0):
+    def __init__(self, game, money=20, month=0):
         self.money = money
         self.month = month
         self.events = Events()
@@ -16,9 +16,11 @@ class Player():
         self.fertiliser = Fertiliser(0)
         self.garden = Garden([[None, 0]], self.storage)
         self.store = Store()
+        self.game = game
 
     def prepare_next_season(self):
         while True:
+            new_page(self.game)
             print("1: Open Storage")
             print("2: Fertiliser")
             print("3: Visit Store")
@@ -28,6 +30,7 @@ class Player():
             user_input = valid_number_input("What would you like to do next?: ", 0, 5)
             
             if user_input == 1:
+                new_page(self.game)
                 self.storage.display_storage_menu()
             elif user_input == 2:
                 self.fertiliser.display_fertiliser_menu(self)
@@ -45,6 +48,7 @@ class Player():
                 return True
 
     def work_season(self):
+        new_page(self.game)
         for month in range(6):
             print(f"--- {MONTHS[month]} ---")
             time.sleep(0.5)
@@ -70,6 +74,7 @@ class Player():
             field.plow()
 
     def season_overview(self):
+        new_page(self.game)
         event = self.events.get_random_event()
         if event is not None:
             print(event.description)

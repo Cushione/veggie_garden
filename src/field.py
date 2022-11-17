@@ -1,4 +1,4 @@
-from .utils import SHEET, CROPS, valid_number_input, valid_confirm_input, press_enter
+from .utils import SHEET, CROPS, valid_number_input, valid_confirm_input, press_enter, new_page
 from .crop import Crop, Tree
 import time
 
@@ -59,6 +59,7 @@ class Garden():
 
     def display_field_menu(self, player):
         while True:
+            new_page(player.game)
             print("Fields")
             for index in range(0, 5):
                 print(f"Field {index + 1} : {(self.fields[index].crop.name.capitalize() if self.fields[index].crop else 'READY TO PLANT') if len(self.fields) >= index + 1 else f'€{self.prices[index]}'}")
@@ -75,17 +76,20 @@ class Garden():
                 break
 
     def unlock_new_field(self, player):
+        new_page(player.game)
         price = self.prices[len(self.fields)]
         if valid_confirm_input(f"Are you sure you want to unlock the next field for €{price}?: "):
             if player.money >= price:
                 player.money -= price
                 self.fields.append(Field(None, 0, self.storage, player.fertiliser))
             else:
+                new_page(player.game)
                 print("Insufficient funds!")
                 press_enter()
 
     def assign_crops(self, player):
         while True:
+            new_page(player.game)
             for index, field in enumerate(self.fields):
                 print(f"{index + 1}: Field {index + 1} : {field.crop.name.capitalize() if field.is_filled() else 'EMPTY'}")
             print("0: Go Back")
@@ -93,12 +97,14 @@ class Garden():
             if selected_field == 0:
                 break
             while True:
+                new_page(player.game)
                 self.storage.display_available_seeds()
                 print("0: Go Back")
                 selected_crop = valid_number_input("What crop would you like to plant?: ", 0, 5)
                 if selected_crop == 0:
                     break
                 if self.storage.available_seeds(CROPS[selected_crop-1]) == 0:
+                    new_page(player.game)
                     print("Not enough seeds. Go to Store to buy more.")
                     press_enter()
                 else:

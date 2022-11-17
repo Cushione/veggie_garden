@@ -1,6 +1,6 @@
 from random import choice
 from string import ascii_uppercase
-from .utils import SHEET, valid_string_input, press_enter
+from .utils import SHEET, valid_string_input, press_enter, new_page
 from .player import Player
 
 class Game:
@@ -13,13 +13,16 @@ class Game:
         self.play_game()
 
     def new_game(self):
+        new_page(None)
         self.username = valid_string_input("Please enter your username: ", 3, 20)
         self.id = "".join(choice(ascii_uppercase) for i in range(6))
+        new_page(None)
         print(f"Your game ID is: {self.id}")
         print("Please write it down so you can resume your game again later.")
         press_enter()
+        new_page(None)
         print("Loading...")
-        self.player = Player(20)
+        self.player = Player(self, 20)
         self.save_game(False)
 
     def load_game(self):

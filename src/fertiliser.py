@@ -1,4 +1,4 @@
-from .utils import SHEET, valid_number_input, valid_confirm_input, press_enter
+from .utils import SHEET, valid_number_input, valid_confirm_input, press_enter, new_page
 
 
 class Fertiliser():
@@ -20,6 +20,7 @@ class Fertiliser():
 
     def display_fertiliser_menu(self, player):
         while True:
+            new_page(player.game)
             print("Fertiliser")
             for index, name in enumerate(["Basic Fertiliser", "Advanced Fertiliser", "Super Fertiliser"]):
                 print(f"{name.ljust(20)}: {'UNLOCKED' if self.level == index + 1 else f'€{self.prices[index + 1]}'}")
@@ -28,6 +29,7 @@ class Fertiliser():
             print("0: Go Back")
             user_input = valid_number_input("What would you like to do?: ", 0, 1)
             if user_input == 1:
+                new_page(player.game)
                 price = self.prices[self.level + 1]
                 if valid_confirm_input(f"Are you sure you want to upgrade your Fertiliser for €{price}?: "):
                     if player.money >= price:
