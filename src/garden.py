@@ -35,7 +35,7 @@ class Garden():
         if valid_confirm_input(f"Are you sure you want to unlock the next field for €{price}?: "):
             if player.money >= price:
                 player.money -= price
-                self.fields.append(Field(None, 0, self.storage, player.fertiliser))
+                self.fields.append(Field(None, self.storage, player.fertiliser))
             else:
                 print_error("Insufficient funds!")
                 press_enter()
@@ -66,3 +66,12 @@ class Garden():
                     crop.plant(player.month)
                     self.fields[selected_field-1].assign_crop(crop)
                     break
+
+    def get_field_status(self):
+        fields = [-2 for i in range(5)]
+        for index, field in enumerate(self.fields):
+            crop = CROPS.index(field.crop.name) if field.crop else -1
+            if crop == 4:
+                crop += field.crop.planted
+            fields[index] = crop
+        return fields

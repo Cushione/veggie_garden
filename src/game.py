@@ -31,12 +31,13 @@ class Game:
         self.username = prev_game[1]
 
     def save_game(self, update=True):
+        game_data = [self.id, self.username, *self.player.get_progress()]
         if update:
             prev_game = self.games_sheet.find(self.id)
             row = prev_game.row
-            self.games_sheet.update(f"c{row}:d{row}", [["1", "1"]])
+            self.games_sheet.update(f"c{row}:o{row}", [game_data[2:]])
         else:
-            self.games_sheet.append_row([self.id, self.username, 0, 0])
+            self.games_sheet.append_row(game_data)
 
     def play_game(self):
         if self.player.prepare_next_season():

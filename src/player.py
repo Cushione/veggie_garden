@@ -44,8 +44,9 @@ class Player():
                 if valid_confirm_input("Are you sure you want to start the next season?: "):
                 self.work_season()
             else:
-                # TODO: Save Game
                 return False
+
+            self.game.save_game()
 
             if self.month == 60:
                 return True
@@ -91,3 +92,6 @@ class Player():
         
         print(f"Total Profit:{f'€{total_profit}'.rjust(14)}")
         press_enter()
+
+    def get_progress(self):
+        return [self.money, self.month, self.fertiliser.level, *self.storage.seeds.values(), *self.garden.get_field_status()]
