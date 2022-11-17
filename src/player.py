@@ -3,7 +3,7 @@ from .storage import Storage
 from .fertiliser import Fertiliser
 from .field import Field, Garden
 from .store import Store
-from .utils import valid_number_input, press_enter, MONTHS, new_page
+from .utils import valid_number_input, press_enter, MONTHS, new_page, colored_string, Colors
 import time
 
 
@@ -49,24 +49,25 @@ class Player():
 
     def work_season(self):
         new_page(self.game)
+        print(colored_string(Colors.green, f"\n----- {f'Start of Year {int(self.month / 6) + 1}'.center(17)} -----"))
         for month in range(6):
-            print(f"--- {MONTHS[month]} ---")
+            print(f"\n----- {colored_string(Colors.magenta, MONTHS[month].center(17))} -----")
             time.sleep(0.5)
             self.month += 1
             if not any([field.is_filled() for field in self.garden.fields]):
-                print("All fields are empty.")
+                print("\nAll fields are empty.")
                 time.sleep(1)
                 continue
             for index, field in enumerate(self.garden.fields):
                 if not field.is_filled():
                     continue
-                print(f"Tending to field {index + 1}")
+                print(f"\n--- {f'Tending to field {index + 1}'.center(21)} ---")
                 time.sleep(0.5)
                 field.tend(self.month)
                 time.sleep(1)
         
-        print(f"\n--- End of Year {int(self.month / 6)} ---\n")
-        input("Press Enter to see your profits.")
+        print(colored_string(Colors.green, f"\n----- {f'End of Year {int(self.month / 6)}'.center(17)} -----"))
+        press_enter("Press Enter to see your profits.")
         self.season_overview()
         
         for field in self.garden.fields:

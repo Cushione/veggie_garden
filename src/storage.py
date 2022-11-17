@@ -1,4 +1,4 @@
-from .utils import SHEET
+from .utils import SHEET, press_enter
 from .crop import Tree, Crop
 
 class Storage():
@@ -33,5 +33,5 @@ class Storage():
         for crop, amount in self.seeds.items():
             print(f"{crop.capitalize().ljust(9)}: {amount}")
         
-        input("Press Enter to go back. ")
+        press_enter("Press Enter to go back. ")
         
