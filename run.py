@@ -20,11 +20,9 @@ while True:
         for index, game in enumerate(get_highscores()):
             print(f"{str(index + 1).rjust(3)}.  {game[1].ljust(15)}  €{game[2]}")
         press_enter()
-        pass
     elif user_input == 4:
         new_page(None, *Text.HOW_TO_PLAY)
         press_enter()
-        pass
     else:
-        # TODO: Show Exit Screen
-        pass
+        new_page(None, *Text.EXIT)
+        break

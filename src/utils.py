@@ -206,3 +206,8 @@ class Text:
         "Save and exit?",
         "Remember your game ID to come back later!"
     )
+
+    EXIT = (
+        "goodbye",
+        "Thank you for playing, see you soon!"
+    )
