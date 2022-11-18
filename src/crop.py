@@ -31,7 +31,7 @@ class Tree(Crop):
         self.planted = month
 
     def not_ripe(self, month):
-        if month % 6 != 0:
-            print(f"{self.name.capitalize()} is not ripe yet.")
-        else:
+        if (month - self.planted) <= self.harvest_time - 6:
             print(f"{self.name.capitalize()} grew a little.")
+        else:
+            print(f"{self.name.capitalize()} is not ripe yet.")

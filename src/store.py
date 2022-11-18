@@ -42,7 +42,14 @@ class Store:
             print(f"{index + 1}: {crop.capitalize().ljust(9)}: €{self.prices[index]}")
 
     def select_crop(self):
-        return valid_number_input("What would you like to buy?: ", 0, 5)
+        while True:
+            selected = valid_number_input("What would you like to buy?: ", 0, 5)
+            if selected == 5:
+                print("Avocado is a perenial. It takes a few seasons to be ready to harvest.")
+                if not valid_confirm_input("Do you still want to buy this seed?: "):
+                    continue
+            break
+        return selected
 
     def select_amount(self, selected_index, budget):
         while True:
