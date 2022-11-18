@@ -1,8 +1,7 @@
-from .crop import Crop, Tree
 import time
 
-class Field():
 
+class Field:
     def __init__(self, status, storage, fertiliser):
         self.seasonal_harvest = 0
         self.storage = storage
@@ -19,14 +18,16 @@ class Field():
         if self.is_filled() and self.crop.is_ripe(month):
             print(f"Harvesting {self.crop.name}.")
             time.sleep(0.5)
-            self.seasonal_harvest += self.fertiliser.improve_harvest(self.crop.harvest(month)) 
+            self.seasonal_harvest += self.fertiliser.improve_harvest(
+                self.crop.harvest(month)
+            )
             if not self.crop.perennial:
                 if month % 6 != 0:
                     if self.storage.available_seeds(self.crop.name) > 0:
                         print(f"Replanting {self.crop.name}.")
                         self.storage.take_seed(self.crop.name)
                     else:
-                        print(f"No more {self.crop.name} seeds to plant.")  
+                        print(f"No more {self.crop.name} seeds to plant.")
                         self.crop = None
                 else:
                     self.crop = None

@@ -1,7 +1,8 @@
 from .utils import SHEET
 from random import shuffle, random
 
-class Events():
+
+class Events:
     def __init__(self):
         self.load_events()
 
@@ -17,7 +18,8 @@ class Events():
                 return event
         return None
 
-class Event():
+
+class Event:
     def __init__(self, data):
         self.name = data[0]
         self.chance = float(data[1])
@@ -26,4 +28,6 @@ class Event():
 
     def adjust_harvest(self, fields):
         for field in fields:
-            field.seasonal_harvest = round(field.seasonal_harvest * self.effect)
+            field.seasonal_harvest = round(
+                field.seasonal_harvest * self.effect
+            )

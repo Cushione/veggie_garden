@@ -1,7 +1,8 @@
 from .utils import SHEET, press_enter
 from .crop import Tree, Crop
 
-class Storage():
+
+class Storage:
     def __init__(self, amounts):
         self.load_seeds(amounts)
 
@@ -26,18 +27,23 @@ class Storage():
             planted = int(value / 6) * 6
             index = value % 6
             name = self.names[index]
-            return Tree(name, int(self.crops[name][2]), int(self.crops[name][3]), planted)
+            return Tree(
+                name,
+                int(self.crops[name][2]),
+                int(self.crops[name][3]),
+                planted,
+            )
         name = self.names[value]
         return Crop(name, int(self.crops[name][2]), int(self.crops[name][3]))
-            
 
     def display_available_seeds(self):
         for index, crop in enumerate(self.seeds):
-            print(f"{index + 1}: {crop.capitalize().ljust(9)}: {self.seeds[crop]}")
+            print(
+                f"{index + 1}: {crop.capitalize().ljust(9)}: "
+                + f"{self.seeds[crop]}"
+            )
 
     def display_storage_menu(self):
         for crop, amount in self.seeds.items():
             print(f"{crop.capitalize().ljust(9)}: {amount}")
-        
         press_enter("Press Enter to go back. ")
-        

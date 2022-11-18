@@ -1,7 +1,18 @@
 from random import choice
 from string import ascii_uppercase
-from .utils import SHEET, valid_string_input, press_enter, new_page, Colors, colored_string, Text, print_error, valid_confirm_input
+from .utils import (
+    SHEET,
+    valid_string_input,
+    press_enter,
+    new_page,
+    Colors,
+    colored_string,
+    Text,
+    print_error,
+    valid_confirm_input,
+)
 from .player import Player
+
 
 class Game:
     def __init__(self, new_game):
@@ -14,7 +25,9 @@ class Game:
     def new_game(self):
         while True:
             new_page(None, *Text.USERNAME)
-            self.username = valid_string_input("Please enter your username: ", 3, 15)
+            self.username = valid_string_input(
+                "Please enter your username: ", 3, 15
+            )
             if valid_confirm_input(f"Are you happy with {self.username}?: "):
                 break
         self.id = "".join(choice(ascii_uppercase) for i in range(6))
@@ -28,8 +41,8 @@ class Game:
 
     def load_game(self):
         while True:
-            prev_id = valid_string_input("Please enter your game ID: ", 6, 6).upper()
-            prev_game = self.games_sheet.find(prev_id)
+            prev_id = valid_string_input("Please enter your game ID: ", 6, 6)
+            prev_game = self.games_sheet.find(prev_id.upper())
             if prev_game is None:
                 print_error("Could not find any game with this ID")
                 if not valid_confirm_input("Would you like to try again?: "):
@@ -38,18 +51,30 @@ class Game:
                 data = self.games_sheet.row_values(prev_game.row)
                 if int(data[3]) >= 60:
                     print_error("This game is already finished.")
-                    if not valid_confirm_input("Would you like to try again?: "):
+                    if not valid_confirm_input(
+                        "Would you like to try again?: "
+                    ):
                         break
                 else:
                     break
         if prev_game is None:
             return
-        data = [int(value) if index > 1 else value for index, value in enumerate(data)]
+        data = [
+            int(value) if index > 1 else value
+            for index, value in enumerate(data)
+        ]
         self.id = data[0]
         self.username = data[1]
         new_page(None)
         print(colored_string(Colors.yellow, "Loading..."))
-        self.player = Player(self, data[2], data[3], [data[i] for i in range(5, 10)], data[4], [data[i] for i in range(10, 15)])
+        self.player = Player(
+            self,
+            data[2],
+            data[3],
+            [data[i] for i in range(5, 10)],
+            data[4],
+            [data[i] for i in range(10, 15)],
+        )
         self.play_game()
 
     def save_game(self, update=True):

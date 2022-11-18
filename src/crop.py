@@ -1,4 +1,4 @@
-class Crop():
+class Crop:
     def __init__(self, name, reward, harvest_time):
         self.name = name
         self.reward = reward
