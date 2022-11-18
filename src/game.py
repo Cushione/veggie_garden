@@ -25,7 +25,7 @@ class Game:
 
     def load_game(self):
         while True:
-            prev_id = valid_string_input("Please enter your id: ", 6, 6).upper()
+            prev_id = valid_string_input("Please enter your game ID: ", 6, 6).upper()
             prev_game = self.games_sheet.find(prev_id)
             if prev_game is None:
                 print_error("Could not find any game with this ID")

@@ -1,6 +1,5 @@
 import gspread
 from google.oauth2.service_account import Credentials
-from enum import Enum
 import os
 from textwrap import fill
 
@@ -41,7 +40,7 @@ def valid_string_input(prompt, minimum, maximum):
         if len(user_input) >= minimum and len(user_input) <= maximum:
             break
         else:
-            print_error(f"Please type in a valid string ({minimum}-{maximum} characters).")
+            print_error(f"Please type in a valid string ({minimum}{f'-{maximum}' if maximum != minimum else ''} characters).")
     return user_input
 
 def valid_confirm_input(prompt):
@@ -177,5 +176,5 @@ class Text:
         return (
             "Congratulations!",
             f"You have finished the game with €{game.player.money}!",
-            "Go to Leaderboard for Highscores."
+            "Go to Highscores to find out if you made it on the list."
         )
