@@ -44,7 +44,9 @@ class Player():
                 if valid_confirm_input("Are you sure you want to start the next season?: "):
                     self.work_season()
             else:
-                return False
+                new_page(self.game, *Text.SAVE_EXIT)
+                if valid_confirm_input("Are you sure you want to leave the game?: "):
+                    return False
 
             self.game.save_game()
 

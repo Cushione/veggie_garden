@@ -178,3 +178,7 @@ class Text:
             f"You have finished the game with €{game.player.money}!",
             "Go to Highscores to find out if you made it on the list."
         )
+    SAVE_EXIT = (
+        "Save and exit?",
+        "Remember your game ID to come back later!"
+    )
