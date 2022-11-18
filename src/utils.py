@@ -166,7 +166,7 @@ class Text:
 
     NEXT_SEASON = (
         "Start next season",
-        "Next season is about to begin. Are you ready?"
+        "Next growing season is about to begin. Have you planted your seeds?"
     )
 
     SEASON_OVERVIEW = (
