@@ -141,7 +141,7 @@ def new_page(game, heading=None, *content):
         + f"{colored_string(Colors.cyan, money.ljust(26))} "
         + f"{colored_string(Colors.green, season.rjust(9))}"
     )
-    print(f"{['-' for i in range(78)].join()}\n")
+    print(f"{''.join(['-' for i in range(77)])}\n")
     print(
         f"{colored_string(Colors.blue, heading.upper())}\n" if heading else ""
     )
