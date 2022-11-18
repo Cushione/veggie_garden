@@ -35,10 +35,15 @@ class Game:
                 if not valid_confirm_input("Would you like to try again?: "):
                     break
             else:
-                break
+                data = self.games_sheet.row_values(prev_game.row)
+                if int(data[3]) >= 60:
+                    print_error("This game is already finished.")
+                    if not valid_confirm_input("Would you like to try again?: "):
+                        break
+                else:
+                    break
         if prev_game is None:
             return
-        data = self.games_sheet.row_values(prev_game.row)
         data = [int(value) if index > 1 else value for index, value in enumerate(data)]
         self.id = data[0]
         self.username = data[1]
