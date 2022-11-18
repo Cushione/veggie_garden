@@ -80,6 +80,13 @@ def new_page(game, heading=None, *content):
     for line in content:
         print(f"{fill(line, width=77)}\n")
 
+def get_highscores():
+    games_sheet = SHEET.worksheet("games")
+    games_data = games_sheet.get_all_values()[1:]
+    finished_games = [row for row in games_data if int(row[3]) == 60]
+    finished_games.sort(key=lambda game: int(game[2]), reverse=True)
+    return finished_games[:10]
+
 # Learned how to add colors to the terminal at
 # https://replit.com/talk/learn/ANSI-Escape-Codes-in-Python/22803
 def colored_string(color, string):
@@ -178,6 +185,23 @@ class Text:
             f"You have finished the game with €{game.player.money}!",
             "Go to Highscores to find out if you made it on the list."
         )
+
+    HOW_TO_PLAY = (
+        "How to play",
+        "Main Objective: You have 10 years to cultivate your veggie garden and earn as much money as possible.",
+        "Seasons: Each year consists of 6 growing months (April - September).\nStock up on your seeds before the season starts, once the season is in progress, you cannot buy new seeds anymore.",
+        "Vegetables: All vegetables have different growing time, so you need to experiment with your seeds and observe their progress on monthly basis.",
+        "Fields: Each field is for one type of vegetable only. If you decide to assign another crop to the field, the previous seed is lost and replaced by the new seed.",
+        "Fertiliser: There are various types of fertiliser for boosting your seasonal yield. Level up for more profit.",
+        "Store: The local store is the perfect place to stock up on your seeds and exchange farm gossip.",
+        "Storage: A place to keep your seeds safe.",
+        "Special Events: Be aware of different types of natural hazards. There is nothing you can do about them, nature is unpredictable."
+    )
+
+    HIGHSCORES = (
+        "Highscores"
+    )
+
     SAVE_EXIT = (
         "Save and exit?",
         "Remember your game ID to come back later!"
