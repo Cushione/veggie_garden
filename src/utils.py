@@ -147,7 +147,7 @@ class Text:
 
     ASSIGN_CROPS = (
         "Assign Crops",
-        "Assign crops to your fields. Be aware that each field can only have on type of crop on it."
+        "Assign crops to your fields. Be aware that each field can only have 1 type of crop on it."
     )
 
     AVAILABLE_SEEDS = (
