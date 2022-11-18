@@ -22,7 +22,7 @@ class Fertiliser():
         while True:
             new_page(player.game, *Text.FERTILISER)
             for index, name in enumerate(["Basic Fertiliser", "Advanced Fertiliser", "Super Fertiliser"]):
-                print(f"{name.ljust(20)}: {'UNLOCKED' if self.level == index + 1 else f'€{self.prices[index + 1]}'}")
+                print(f"{name.ljust(20)}: {'UNLOCKED' if self.level >= index + 1 else f'€{self.prices[index + 1]}'}")
 
             print("\n1: Upgrade Fertiliser")
             print("0: Go Back")
