@@ -211,3 +211,11 @@ class Text:
         "goodbye",
         "Thank you for playing, see you soon!"
     )
+
+    STORYLINE = (
+        "Storyline",
+        "You have inherited a field from your grandfather, together with €20. Your dream of starting your own veggie garden has come true!",
+        "Now you can buy and plant seeds, harvest the crops when they are ready, and finally, sell them for profit. Every crop has a different growing time and brings different reward.",
+        "Unlock new fields to maximise your growing potential, apply fertiliser to grow bigger vegetables, and watch your garden blossom.",
+        "Have fun!"
+    )

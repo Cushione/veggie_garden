@@ -20,10 +20,10 @@ class Game:
         self.id = "".join(choice(ascii_uppercase) for i in range(6))
         new_page(None, *Text.game_id(self.id))
         press_enter()
-        new_page(None)
-        print(colored_string(Colors.yellow, "Loading..."))
+        new_page(None, *Text.STORYLINE)
         self.player = Player(self)
         self.save_game(False)
+        press_enter()
         self.play_game()
 
     def load_game(self):
