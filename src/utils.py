@@ -22,7 +22,7 @@ MONTHS = ["April", "May", "June", "July", "August", "September"]
 
 def valid_number_input(prompt, minimum, maximum):
     while True:
-        user_input = input(colored_string(Colors.yellow, f"\n{prompt}"))
+        user_input = input(colored_string(Colors.yellow, f"\n{prompt}\n"))
         try:
             user_input = int(user_input.strip())
         except ValueError:
@@ -36,7 +36,7 @@ def valid_number_input(prompt, minimum, maximum):
 
 def valid_string_input(prompt, minimum, maximum):
     while True:
-        user_input = input(colored_string(Colors.yellow, f"\n{prompt}")).strip()
+        user_input = input(colored_string(Colors.yellow, f"\n{prompt}\n")).strip()
         if len(user_input) >= minimum and len(user_input) <= maximum:
             break
         else:
@@ -45,7 +45,7 @@ def valid_string_input(prompt, minimum, maximum):
 
 def valid_confirm_input(prompt):
     while True:
-        user_input = input(colored_string(Colors.yellow, f"\n{prompt}")).strip().lower()
+        user_input = input(colored_string(Colors.yellow, f"\n{prompt}\n")).strip().lower()
         if user_input in ["yes", "y"]:
             result = True
             break
@@ -57,7 +57,7 @@ def valid_confirm_input(prompt):
     return result
 
 def press_enter(prompt = "Press Enter to continue."):
-    input(colored_string(Colors.yellow, f"\n{prompt}"))
+    input(colored_string(Colors.yellow, f"\n{prompt}\n"))
 
 def print_error(message):
     print(colored_string(Colors.red, message))
