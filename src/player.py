@@ -9,7 +9,7 @@ import time
 
 
 class Player():
-    def __init__(self, game, money=20, month=0, seeds=[0, 0, 0, 0, 0], fertiliser=0, fields=[-1]):
+    def __init__(self, game, money=19, month=0, seeds=[0, 0, 0, 0, 0], fertiliser=0, fields=[-1]):
         self.money = money
         self.month = month
         self.events = Events()
