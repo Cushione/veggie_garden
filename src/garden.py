@@ -19,12 +19,13 @@ class Garden():
                 print(f"Field {index + 1} : {(self.fields[index].crop.name.capitalize() if self.fields[index].crop else 'READY TO PLANT') if len(self.fields) >= index + 1 else f'€{self.prices[index]}'}")
 
             print("\n1: Plant crops")
-            print("2: Unlock new field")
+            if len(self.fields) < 5:
+                print("2: Unlock new field")
             print("0: Go Back")
-            user_input = valid_number_input("What would you like to do?: ", 0, 2)
+            user_input = valid_number_input("What would you like to do?: ", 0, 2 if len(self.fields) < 5 else 1)
             if user_input == 1:
                 self.assign_crops(player)
-            elif user_input == 2:
+            elif user_input == 2 and len(self.fields) < 5:
                 self.unlock_new_field(player)
             else:
                 break
