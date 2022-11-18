@@ -1,3 +1,6 @@
+"""
+Game Module.
+"""
 from random import choice
 from string import ascii_uppercase
 from .utils import (
@@ -15,14 +18,27 @@ from .player import Player
 
 
 class Game:
+    """
+    Representation of a game object.
+    Handles the start of a new game and saving and loading of existing games.
+    """
     def __init__(self, new_game):
         self.games_sheet = SHEET.worksheet("games")
+        self.id = None
+        self.username = None
+        self.player = None
         if new_game:
             self.new_game()
         else:
             self.load_game()
 
     def new_game(self):
+        """
+        Initialises a new game.
+        Shows a username prompt and handles user input.
+        Generates a new game id and creates a new Player object with default values. 
+        Afterwards starts the game.
+        """
         while True:
             new_page(None, *Text.USERNAME)
             self.username = valid_string_input(
@@ -40,6 +56,13 @@ class Game:
         self.play_game()
 
     def load_game(self):
+        """
+        Initialises an existing game.
+        Shows a game id prompt and handles user input.
+        If a valid game id was entered, loads the game data and creates a new Player
+        object with the loaded data.
+        Afterwards starts the game.
+        """
         while True:
             prev_id = valid_string_input("Please enter your game ID: ", 6, 6)
             prev_game = self.games_sheet.find(prev_id.upper())
@@ -78,6 +101,9 @@ class Game:
         self.play_game()
 
     def save_game(self, update=True):
+        """
+        Retrieves the progress from the Player object and saves it to Google sheets.
+        """
         game_data = [self.id, self.username, *self.player.get_progress()]
         if update:
             prev_game = self.games_sheet.find(self.id)
@@ -87,9 +113,16 @@ class Game:
             self.games_sheet.append_row(game_data)
 
     def play_game(self):
+        """
+        Runs the game.
+        If the game finishes successfully, the game results screen is shown.
+        """
         if self.player.prepare_next_season():
             self.show_game_results()
 
     def show_game_results(self):
+        """
+        Shows the game result screen with the data from the current game.
+        """
         new_page(None, *Text.end_screen(self))
         press_enter()

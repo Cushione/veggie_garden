@@ -1,3 +1,8 @@
+"""
+    Main module
+    Entry file for the application. 
+"""
+
 from src.game import Game
 from src.utils import (
     valid_number_input,

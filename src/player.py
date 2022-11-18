@@ -1,3 +1,6 @@
+"""
+Player Module.
+"""
 from .events import Events
 from .storage import Storage
 from .fertiliser import Fertiliser
@@ -18,6 +21,10 @@ import time
 
 
 class Player:
+    """
+    Representation of the Player object.
+    Binds together all the game elements and handles the main game logic.
+    """
     def __init__(
         self,
         game,
@@ -37,6 +44,11 @@ class Player:
         self.game = game
 
     def prepare_next_season(self):
+        """
+        Allows the user to prepare for the next season.
+        Displays the main game menu from where the user can access all the game elements.
+        The loop finishes when the game reaches month 60.
+        """
         while True:
             new_page(self.game, *Text.prepare_season(self.month))
             print("1: Open Storage")
@@ -76,6 +88,9 @@ class Player:
                 return True
 
     def work_season(self):
+        """
+        Works a season by tending to all unlocked fields 6 times.
+        """
         new_page(self.game)
         year = int(self.month / 6) + 1
         print(
@@ -111,18 +126,33 @@ class Player:
             )
         )
         press_enter("Press Enter to see your profits.")
-        self.season_overview()
+        self.handle_end_of_season()
+
+    def handle_end_of_season(self):
+        """
+        Handles the end of a season.
+        Determines if an event happend and adjusts harvest accordingly.
+        Afterwards, shows the overview, adds profit to the money and
+        plows (resets) all the fields.
+        """
+        event = self.events.get_random_event()
+        if event is not None:
+            event.adjust_harvest(self.garden.fields)
+        self.season_overview(event)
 
         for field in self.garden.fields:
             self.money += field.seasonal_harvest
             field.plow()
 
-    def season_overview(self):
+    def season_overview(self, event):
+        """
+        Displays an overview of the recent season.
+        Shows a description of the event if applicable and an overview of 
+        the profits.
+        """
         new_page(self.game, Text.SEASON_OVERVIEW)
-        event = self.events.get_random_event()
         if event is not None:
-            print(f"{event.description}\n")
-            event.adjust_harvest(self.garden.fields)
+            event.print_self()
         total_profit = 0
         for index, field in enumerate(self.garden.fields):
             status = (
@@ -141,6 +171,9 @@ class Player:
         press_enter()
 
     def get_progress(self):
+        """
+        Collects data from all game elements and returns them as a list.
+        """
         return [
             self.money,
             self.month,

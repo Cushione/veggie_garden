@@ -1,8 +1,14 @@
+"""
+Utils Module.
+A collection of shared constants and functions that are shared by other 
+modules. 
+"""
 import gspread
 from google.oauth2.service_account import Credentials
 import os
 from textwrap import fill
 
+# Google Sheet Initialisation and Authorisation
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
@@ -14,14 +20,20 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open("veggie_garden")
 
-
+# List of Crop Names
 crops_sheet = SHEET.worksheet("crops")
 CROPS = crops_sheet.col_values(1)[1:]
 
+# List of relevant month names
 MONTHS = ["April", "May", "June", "July", "August", "September"]
 
 
 def valid_number_input(prompt, minimum, maximum):
+    """
+    Requests a number from the user.
+    Validates the input to ensure that a valid number from the given range
+    is entered.
+    """
     while True:
         user_input = input(colored_string(Colors.yellow, f"\n{prompt}"))
         try:
@@ -41,6 +53,11 @@ def valid_number_input(prompt, minimum, maximum):
 
 
 def valid_string_input(prompt, minimum, maximum):
+    """
+    Requests a string from the user.
+    Validates the input to ensure that a valid string with a valid length
+    is entered.
+    """
     while True:
         user_input = input(
             colored_string(Colors.yellow, f"\n{prompt}")
@@ -56,6 +73,10 @@ def valid_string_input(prompt, minimum, maximum):
 
 
 def valid_confirm_input(prompt):
+    """
+    Requests a confirmation from the user.
+    Validates the input to ensure that a valid confirmation is entered.
+    """
     while True:
         user_input = (
             input(colored_string(Colors.yellow, f"\n{prompt}")).strip().lower()
@@ -72,18 +93,31 @@ def valid_confirm_input(prompt):
 
 
 def press_enter(prompt="Press Enter to continue."):
+    """
+    Prompts the user to press Enter.
+    """
     input(colored_string(Colors.yellow, f"\n{prompt}"))
 
 
 def print_error(message):
+    """
+    Prints a message as an error.
+    """
     print(colored_string(Colors.red, message))
 
 
 def clear_terminal():
+    """
+    Clears the terminal.
+    """
     os.system("cls" if os.name == "nt" else "clear")
 
 
 def new_page(game, heading=None, *content):
+    """
+    Displays a new page by clearing the terminal and then printing the
+    standard elements with the given text and data.
+    """
     clear_terminal()
     username = f" - {game.username}" if game else ""
     game_id = (
@@ -125,11 +159,19 @@ def get_highscores():
 
 # Learned how to add colors to the terminal at
 # https://replit.com/talk/learn/ANSI-Escape-Codes-in-Python/22803
+
 def colored_string(color, string):
+    """
+    Returns the given string in the given color.
+    """
     return f"{color}{string}{Colors.white}"
 
 
 class Colors:
+    """
+    Holds colors as ANSI Escape Codes.
+    Used for coloring of text in the terminal.
+    """
     black = "\u001b[30m"
     red = "\u001b[31m"
     green = "\u001b[32m"
@@ -140,11 +182,18 @@ class Colors:
     white = "\u001b[37m"
 
     @staticmethod
-    def rgb(r, g, b):
-        return f"\u001b[38;2;{r};{g};{b}m"
+    def rgb(red, green, blue):
+        """
+        Returns the ANSI Escape code for coloring a string with the
+        given red, green and blue values
+        """
+        return f"\u001b[38;2;{red};{green};{blue}m"
 
 
 class Text:
+    """
+    Holds text for the heading and description for every page.
+    """
     MAIN_MENU = (
         "Main Menu",
         "Welcome to Veggie Garden, your own space to grow, harvest, and sell "

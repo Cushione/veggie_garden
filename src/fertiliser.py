@@ -1,3 +1,6 @@
+"""
+Fertiliser Module.
+"""
 from .utils import (
     SHEET,
     valid_number_input,
@@ -9,11 +12,19 @@ from .utils import (
 
 
 class Fertiliser:
+    """
+    Representation of the fertiliser object.
+    Loads fertiliser data from Google sheets upon initialisation.
+    Manages the current fertiliser level.
+    """
     def __init__(self, level):
         self.level = level
         self.load_fertiliser_data()
 
     def load_fertiliser_data(self):
+        """
+        Loads fertiliser data from Google sheets.
+        """
         fertiliser_sheet = SHEET.worksheet("fertiliser")
         self.prices = [
             int(price) for price in fertiliser_sheet.col_values(2)[1:]
@@ -23,12 +34,23 @@ class Fertiliser:
         ]
 
     def upgrade(self):
+        """
+        Increments the fertiliser level.
+        """
         self.level += 1
 
     def improve_harvest(self, harvest):
+        """
+        Adjusts seasonal harvest with the respective reward.
+        """
         return round(harvest * self.rewards[self.level])
 
     def display_fertiliser_menu(self, player):
+        """
+        Displays the fertiliser menu.
+        Allows the user to see the current level of fertiliser and upgrade
+        if the user has enough money.
+        """
         while True:
             new_page(player.game, *Text.FERTILISER)
             for index, name in enumerate(
