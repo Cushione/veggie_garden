@@ -124,8 +124,8 @@ class Text:
     def game_id(g_id):
         return (
             "Game ID",
-            f"Your game ID is: {g_id}",
-            "Please write it down so you can resume your game again later."
+            f"Your game ID is: {colored_string(Colors.rgb(255, 165, 0), g_id)}",
+            "Please write your game ID down so you can resume your game again later."
         )
 
     FERTILISER = (
@@ -155,7 +155,7 @@ class Text:
     )
 
     PERPARE_SEASON = (
-        "Prepare for the next Season",
+        "Prepare Season",
         "New Season is about to start. Stock up on seeds and plant your fields."
     )
 
