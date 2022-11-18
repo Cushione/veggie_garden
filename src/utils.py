@@ -56,7 +56,7 @@ def valid_confirm_input(prompt):
             print_error("Please type either yes/y or no/n.")
     return result
 
-def press_enter(prompt = "Press Enter to continue."):
+def press_enter(prompt="Press Enter to continue."):
     input(colored_string(Colors.yellow, f"\n{prompt}"))
 
 def print_error(message):
@@ -71,7 +71,7 @@ def new_page(game, heading=None, *content):
     clear_terminal()
     username = f" - {game.username}" if game else ""
     game_id = f"ID: {colored_string(Colors.rgb(255, 165, 0), game.id)}" if game else ""
-    season = f"Year {int((game.player.month / 6) + 1)}" if game else "" 
+    season = f"Year {int((game.player.month / 6) + 1) if game and game.player.month < 60 else '10'}" if game else "" 
     money = f"€{game.player.money}" if game else ""
     title = colored_string(Colors.green, "Veggie Garden")
     print(f"{title} {game_id}{username.ljust(15)}  {colored_string(Colors.cyan, money.ljust(26))} {colored_string(Colors.green, season.rjust(9))}")
@@ -154,10 +154,13 @@ class Text:
         "Available Seeds"
     )
 
-    PERPARE_SEASON = (
-        "Prepare Season",
-        "New Season is about to start. Stock up on seeds and plant your fields."
-    )
+    @staticmethod
+    def prepare_season(month):
+        return (
+            "Prepare Season",
+            "New Season is about to start. Stock up on seeds and plant your fields."
+            if month < 54 else "This is your final season!"
+        )
 
     STORAGE = (
         "Storage",

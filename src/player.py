@@ -9,7 +9,7 @@ import time
 
 
 class Player():
-    def __init__(self, game, money=19, month=0, seeds=[0, 0, 0, 0, 0], fertiliser=0, fields=[-1]):
+    def __init__(self, game, money=20, month=0, seeds=[0, 0, 0, 0, 0], fertiliser=0, fields=[-1]):
         self.money = money
         self.month = month
         self.events = Events()
@@ -21,7 +21,7 @@ class Player():
 
     def prepare_next_season(self):
         while True:
-            new_page(self.game, *Text.PERPARE_SEASON)
+            new_page(self.game, *Text.prepare_season(self.month))
             print("1: Open Storage")
             print("2: Fertiliser")
             print("3: Visit Store")
@@ -57,7 +57,7 @@ class Player():
         new_page(self.game)
         print(colored_string(Colors.green, f"\n----- {f'Start of Year {int(self.month / 6) + 1}'.center(17)} -----"))
         for month in range(6):
-            print(f"\n----- {colored_string(Colors.magenta, MONTHS[month].center(17))} -----")
+            print(f"\n----- {colored_string(Colors.rgb(255, 100, 255), MONTHS[month].center(17))} -----")
             time.sleep(0.5)
             self.month += 1
             if not any([field.is_filled() for field in self.garden.fields]):
@@ -84,7 +84,7 @@ class Player():
         new_page(self.game, Text.SEASON_OVERVIEW)
         event = self.events.get_random_event()
         if event is not None:
-            print(event.description)
+            print(f"{event.description}\n")
             event.adjust_harvest(self.garden.fields)
         total_profit = 0
         for index, field in enumerate(self.garden.fields): 
