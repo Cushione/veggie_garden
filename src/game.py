@@ -14,7 +14,7 @@ class Game:
     def new_game(self):
         while True:
             new_page(None, *Text.USERNAME)
-            self.username = valid_string_input("Please enter your username: ", 3, 20)
+            self.username = valid_string_input("Please enter your username: ", 3, 15)
             if valid_confirm_input(f"Are you happy with {self.username}?: "):
                 break
         self.id = "".join(choice(ascii_uppercase) for i in range(6))
