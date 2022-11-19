@@ -36,8 +36,8 @@ class Game:
         """
         Initialises a new game.
         Shows a username prompt and handles user input.
-        Generates a new game id and creates a new Player object with default values. 
-        Afterwards starts the game.
+        Generates a new game id and creates a new Player object with default 
+        values. Afterwards starts the game.
         """
         while True:
             new_page(None, *Text.USERNAME)
@@ -46,21 +46,27 @@ class Game:
             )
             if valid_confirm_input(f"Are you happy with {self.username}?: "):
                 break
-        self.id = "".join(choice(ascii_uppercase) for i in range(6))
+          
+        while True:
+            self.id = "".join(choice(ascii_uppercase) for i in range(6))
+            if self.games_sheet.find(self.id) is None:
+                break
         new_page(None, *Text.game_id(self.id))
         press_enter()
+
         new_page(None, *Text.STORYLINE)
         self.player = Player(self)
         self.save_game(False)
         press_enter()
+
         self.play_game()
 
     def load_game(self):
         """
         Initialises an existing game.
         Shows a game id prompt and handles user input.
-        If a valid game id was entered, loads the game data and creates a new Player
-        object with the loaded data.
+        If a valid game id was entered, loads the game data and creates a new
+        Player object with the loaded data.
         Afterwards starts the game.
         """
         while True:
@@ -69,7 +75,7 @@ class Game:
             if prev_game is None:
                 print_error("Could not find any game with this ID")
                 if not valid_confirm_input("Would you like to try again?: "):
-                    break
+                    return
             else:
                 data = self.games_sheet.row_values(prev_game.row)
                 if int(data[3]) >= 60:
@@ -77,11 +83,12 @@ class Game:
                     if not valid_confirm_input(
                         "Would you like to try again?: "
                     ):
-                        break
+                        return
                 else:
                     break
         if prev_game is None:
             return
+
         data = [
             int(value) if index > 1 else value
             for index, value in enumerate(data)
@@ -102,7 +109,8 @@ class Game:
 
     def save_game(self, update=True):
         """
-        Retrieves the progress from the Player object and saves it to Google sheets.
+        Retrieves the progress from the Player object and saves it to Google
+        sheets.
         """
         game_data = [self.id, self.username, *self.player.get_progress()]
         if update:

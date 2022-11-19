@@ -295,7 +295,7 @@ class Text:
         + "There is nothing you can do about them, nature is unpredictable.",
     )
 
-    HIGHSCORES = "Highscores"
+    HIGHSCORES = "High Scores"
 
     SAVE_EXIT = ("Save and exit?", "Remember your game ID to come back later!")
 

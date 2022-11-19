@@ -17,7 +17,7 @@ while True:
 
     print("1: New Game")
     print("2: Resume Game")
-    print("3: Highscores")
+    print("3: High Scores")
     print("4: How to Play")
     print("0: Exit Game")
     user_input = valid_number_input("What would you like to do?: ", 0, 4)
