@@ -39,6 +39,7 @@ class Crop:
         """
         Prints information about the crop not being ready for harvest.
         """
+        print(f"Watering {self.name.capitalize()}.") 
         print(f"{self.name.capitalize()} is not ripe yet.")
 
 

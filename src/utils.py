@@ -203,7 +203,7 @@ class Text:
         "Please select one of the following options to continue:",
     )
 
-    USERNAME = ("New Game", "Please select a username (3 - 20 characters)")
+    USERNAME = ("New Game", "Please select a username (3 - 15 characters)")
 
     @staticmethod
     def game_id(g_id):
