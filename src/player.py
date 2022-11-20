@@ -46,7 +46,8 @@ class Player:
     def prepare_next_season(self):
         """
         Allows the user to prepare for the next season.
-        Displays the main game menu from where the user can access all the game elements.
+        Displays the main game menu from where the user can access all the
+        game elements.
         The loop finishes when the game reaches month 60.
         """
         while True:

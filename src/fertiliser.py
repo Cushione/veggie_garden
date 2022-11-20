@@ -8,6 +8,7 @@ from .utils import (
     press_enter,
     new_page,
     Text,
+    print_error
 )
 
 
@@ -79,7 +80,7 @@ class Fertiliser:
                             player.money -= price
                             self.upgrade()
                         else:
-                            print("Insufficient funds!")
+                            print_error("Insufficient funds!")
                             press_enter()
                 else:
                     break
