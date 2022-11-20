@@ -39,27 +39,28 @@ class Store:
             new_page(player.game, *Text.STORE)
             self.show_stock()
             print("0: Go back")
-            selected_index = self.select_crop()
+            selected_crop = self.select_crop()
 
-            if selected_index == 0:
+            if selected_crop == 0:
                 break
-            selected_crop = selected_index - 1
+            # Get index of selected crop
+            selected_index = selected_crop - 1
 
-            if player.money < self.prices[selected_crop]:
+            if player.money < self.prices[selected_index]:
                 print_error("You cannot afford this packet of seeds!")
                 press_enter()
                 continue
             amount, total_price = self.select_amount(
-                selected_crop, player.money
+                selected_index, player.money
             )
 
             new_page(player.game)
             if valid_confirm_input(
                 f"Are you sure you want to buy {amount} packets of "
-                + f"{CROPS[selected_crop]} for €{total_price}?: "
+                + f"{CROPS[selected_index]} for €{total_price}?: "
             ):
                 player.money -= total_price
-                player.storage.add_seeds(CROPS[selected_crop], amount)
+                player.storage.add_seeds(CROPS[selected_index], amount)
 
     def show_stock(self):
         """
@@ -79,6 +80,7 @@ class Store:
             selected = valid_number_input(
                 "What would you like to buy?: ", 0, 5
             )
+            # Display hint for avocadoes
             if selected == 5:
                 print(
                     "Avocado is a perenial. It takes a few seasons "

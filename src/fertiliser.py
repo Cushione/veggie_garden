@@ -27,6 +27,7 @@ class Fertiliser:
         Loads fertiliser data from Google sheets.
         """
         fertiliser_sheet = SHEET.worksheet("fertiliser")
+        # Extract prices and rewards from the data
         self.prices = [
             int(price) for price in fertiliser_sheet.col_values(2)[1:]
         ]

@@ -17,7 +17,8 @@ from .utils import (
 class Garden:
     """
     Representation of the garden object.
-    Keeps track of the unlocked fields and allows the user to interact with them.
+    Keeps track of the unlocked fields and allows the user to interact 
+    with them.
     Allows unlocking new fields and assignments of crops to fields.
     """
     def __init__(self, fields_data, storage, fertiliser):
@@ -44,6 +45,7 @@ class Garden:
         """
         while True:
             new_page(player.game, *Text.FIELDS)
+            # List all 5 fields with the status
             for index in range(0, 5):
                 status = (
                     (
@@ -56,6 +58,7 @@ class Garden:
                 )
                 print(f"Field {index + 1} : {status}")
             print("\n1: Plant crops")
+            # Only show unlock option if less than 5 fields are unlocked
             if len(self.fields) < 5:
                 print("2: Unlock new field")
             print("0: Go Back")
@@ -92,10 +95,12 @@ class Garden:
 
     def select_field(self, player):
         """
-        Allows the user to select from unlocked fields to assign crops to them.
+        Allows the user to select from unlocked fields to assign 
+        crops to them.
         """
         while True:
             new_page(player.game, *Text.ASSIGN_CROPS)
+            # List all the unlocked fields with crop if filled
             for index, field in enumerate(self.fields):
                 status = (
                     field.crop.name.capitalize()
@@ -109,6 +114,7 @@ class Garden:
             )
             if selected_field == 0:
                 break
+            # If field is already filled, show warning
             elif self.fields[
                 selected_field - 1
             ].is_filled() and not valid_confirm_input(
@@ -120,8 +126,8 @@ class Garden:
 
     def assign_crop(self, player, field):
         """
-        Allows the user to select a crop that will be assigned to the given field
-         if enough seeds are available.
+        Allows the user to select a crop that will be assigned to the given
+        field if enough seeds are available.
         """
         while True:
             new_page(player.game, Text.AVAILABLE_SEEDS)
@@ -149,6 +155,7 @@ class Garden:
         for index, field in enumerate(self.fields):
             crop = CROPS.index(field.crop.name) if field.crop else -1
             if crop == 4:
+                # If crop is avocado, add the month of planting to it
                 crop += field.crop.planted
             fields[index] = crop
         return fields

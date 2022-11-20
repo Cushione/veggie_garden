@@ -27,6 +27,8 @@ class Events:
         """
         Returns a random event or None.
         """
+        # Shuffe the list so events with a higher chance are not always
+        # tested first
         shuffle(self.events)
         for event in self.events:
             if random() <= event.chance:

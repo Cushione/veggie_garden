@@ -54,9 +54,13 @@ class Tree(Crop):
         self.perennial = True
 
     def is_ripe(self, month):
+        # Trees are only ripe at the end of a season and if the age is greater
+        # than the set harvest time
         return month % 6 == 0 and (month - self.planted) >= self.harvest_time
 
     def not_ripe(self, month):
+        # If a Tree is not harvested this season, display hint that it is
+        # still growing
         if (month - self.planted) <= self.harvest_time - 6:
             print(f"{self.name.capitalize()} grew a little.")
         else:

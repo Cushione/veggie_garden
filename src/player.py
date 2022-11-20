@@ -107,10 +107,12 @@ class Player:
             print(f"\n----- {month_name} -----")
             time.sleep(0.5)
             self.month += 1
+            # If all fields are empty, print message and go to next month
             if not any([field.is_filled() for field in self.garden.fields]):
                 print("\nAll fields are empty.")
                 time.sleep(1)
                 continue
+            # Tend to every unlocked field if filled with a crop
             for index, field in enumerate(self.garden.fields):
                 if not field.is_filled():
                     continue
@@ -136,11 +138,12 @@ class Player:
         Afterwards, shows the overview, adds profit to the money and
         plows (resets) all the fields.
         """
+        # Check if an event happened
         event = self.events.get_random_event()
         if event is not None:
             event.adjust_harvest(self.garden.fields)
         self.season_overview(event)
-
+        # Add harvest to balance and reset fields
         for field in self.garden.fields:
             self.money += field.seasonal_harvest
             field.plow()
@@ -148,7 +151,7 @@ class Player:
     def season_overview(self, event):
         """
         Displays an overview of the recent season.
-        Shows a description of the event if applicable and an overview of 
+        Shows a description of the event if applicable and an overview of
         the profits.
         """
         new_page(self.game, Text.SEASON_OVERVIEW)
@@ -156,6 +159,7 @@ class Player:
             event.print_self()
         total_profit = 0
         for index, field in enumerate(self.garden.fields):
+            # For every unlocked field, print status and harvest
             status = (
                 field.assigned_crop.name.capitalize().ljust(9)
                 if field.assigned_crop
@@ -165,6 +169,7 @@ class Player:
                 f"Field {index + 1}: {status}: "
                 + f"{f'€{field.seasonal_harvest}'.rjust(7)}"
             )
+            # Add up harvest for the display of the total profit
             total_profit += field.seasonal_harvest
         print("---------------------------")
 

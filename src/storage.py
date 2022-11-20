@@ -19,8 +19,11 @@ class Storage:
         Loads crop data from Google sheets.
         """
         crop_sheet = SHEET.worksheet("crops")
+        # Create dictionaries with crops names as keys
         self.names = crop_sheet.col_values(1)[1:]
+        # Map crop names to crop amounts
         self.seeds = dict(zip(self.names, amounts))
+        # Map crop names to crop data
         self.crops = dict(zip(self.names, crop_sheet.get_all_values()[1:]))
 
     def available_seeds(self, crop):
@@ -47,8 +50,12 @@ class Storage:
         """
         Creates an instance of the specified crop.
         """
+        # If value is greater than 3, then create a Tree
         if value > 3:
+            # Tree can only be planted between seasons when the month is
+            # a multiple of 6
             planted = int(value / 6) * 6
+            # The rest equals the index of the crop
             index = value % 6
             name = self.names[index]
             return Tree(
@@ -62,7 +69,7 @@ class Storage:
 
     def display_available_seeds(self):
         """
-        Displays a numbered list of all crops with their respective amount 
+        Displays a numbered list of all crops with their respective amount
         of seeds.
         """
         for index, crop in enumerate(self.seeds):

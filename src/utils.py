@@ -36,6 +36,7 @@ def valid_number_input(prompt, minimum, maximum):
     """
     while True:
         user_input = input(colored_string(Colors.yellow, f"\n{prompt}"))
+        # Validate that input is a valid integer number
         try:
             user_input = int(user_input.strip())
         except ValueError:
@@ -43,12 +44,14 @@ def valid_number_input(prompt, minimum, maximum):
                 f"Please type in a valid number ({minimum}-{maximum})."
             )
             continue
+        # Validate that number is between minimum and maximum value 
         if user_input >= minimum and user_input <= maximum:
             break
         else:
             print_error(
                 f"Please type in a valid number ({minimum}-{maximum})."
             )
+    # Return the valid number input
     return user_input
 
 
@@ -62,6 +65,7 @@ def valid_string_input(prompt, minimum, maximum):
         user_input = input(
             colored_string(Colors.yellow, f"\n{prompt}")
         ).strip()
+        # Validate that the string has a valid length
         if len(user_input) >= minimum and len(user_input) <= maximum:
             break
         else:
@@ -69,6 +73,7 @@ def valid_string_input(prompt, minimum, maximum):
                 f"Please type in a valid string ({minimum}"
                 + f"{f'-{maximum}' if maximum != minimum else ''} characters)."
             )
+    # Return the valid user input
     return user_input
 
 
@@ -81,6 +86,7 @@ def valid_confirm_input(prompt):
         user_input = (
             input(colored_string(Colors.yellow, f"\n{prompt}")).strip().lower()
         )
+        # Validate that either y(es) or n(o) was entered
         if user_input in ["yes", "y"]:
             result = True
             break
@@ -89,6 +95,7 @@ def valid_confirm_input(prompt):
             break
         else:
             print_error("Please type either yes/y or no/n.")
+    # Return the valid user input
     return result
 
 
@@ -110,6 +117,7 @@ def clear_terminal():
     """
     Clears the terminal.
     """
+    # Clear the terminal by calling the OS specific command
     os.system("cls" if os.name == "nt" else "clear")
 
 
@@ -119,6 +127,7 @@ def new_page(game, heading=None, *content):
     standard elements with the given text and data.
     """
     clear_terminal()
+    # Prepare data for the header
     username = f" - {game.username}" if game else ""
     game_id = (
         f"ID: {colored_string(Colors.rgb(255, 165, 0), game.id)}"
@@ -136,24 +145,36 @@ def new_page(game, heading=None, *content):
         season = ""
     money = f"€{game.player.money}" if game else ""
     title = colored_string(Colors.green, "Veggie Garden")
+    # Print header with data
     print(
         f"\n{title} {game_id}{username.ljust(15)}  "
         + f"{colored_string(Colors.cyan, money.ljust(26))} "
         + f"{colored_string(Colors.green, season.rjust(9))}"
     )
+    # Print line underneath the header
     print(f"{''.join(['-' for i in range(77)])}\n")
-    print(
-        f"{colored_string(Colors.blue, heading.upper())}\n" if heading else ""
-    )
+    # Print heading if provided
+    if heading:
+        print(
+            f"{colored_string(Colors.blue, heading.upper())}\n"
+        )
+    # Print all the provided content
     for line in content:
         print(f"{fill(line, width=77)}\n")
 
 
 def get_highscores():
+    """
+    Returns the ten best finished games
+    """
+    # Load all the games without name row
     games_sheet = SHEET.worksheet("games")
     games_data = games_sheet.get_all_values()[1:]
+    # Filter finished games
     finished_games = [row for row in games_data if int(row[3]) == 60]
+    # Sort games by money in descending order
     finished_games.sort(key=lambda game: int(game[2]), reverse=True)
+    # Return the first 10 games
     return finished_games[:10]
 
 

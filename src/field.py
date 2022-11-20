@@ -14,9 +14,11 @@ class Field:
         self.seasonal_harvest = 0
         self.storage = storage
         self.fertiliser = fertiliser
+        # Field is empty
         if status == -1:
             self.crop = None
             self.assigned_crop = None
+        # Field has a crop
         else:
             crop = self.storage.create_crop(status)
             self.crop = crop
@@ -25,8 +27,8 @@ class Field:
     def tend(self, month):
         """
         Called every month of the growing season.
-        Checks if assigned crop is ripe, and if applicable, applies fertiliser,
-        harvests and replants the crop.
+        Checks if assigned crop is ripe, and if applicable, applies
+        fertiliser, harvests and replants the crop.
         """
         if self.is_filled() and self.crop.is_ripe(month):
             print(f"Harvesting {self.crop.name}.")

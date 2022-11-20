@@ -36,7 +36,7 @@ class Game:
         """
         Initialises a new game.
         Shows a username prompt and handles user input.
-        Generates a new game id and creates a new Player object with default 
+        Generates a new game id and creates a new Player object with default
         values. Afterwards starts the game.
         """
         while True:
@@ -48,6 +48,7 @@ class Game:
                 break
           
         while True:
+            # Generate a string with 6 uppercase letters
             self.id = "".join(choice(ascii_uppercase) for i in range(6))
             if self.games_sheet.find(self.id) is None:
                 break
@@ -70,13 +71,16 @@ class Game:
         Afterwards starts the game.
         """
         while True:
+            # Try to find game with entered game ID
             prev_id = valid_string_input("Please enter your game ID: ", 6, 6)
             prev_game = self.games_sheet.find(prev_id.upper())
+            # If game ID cannot be found, allow retry
             if prev_game is None:
                 print_error("Could not find any game with this ID")
                 if not valid_confirm_input("Would you like to try again?: "):
                     return
             else:
+                # Check if game is finished and allow retry 
                 data = self.games_sheet.row_values(prev_game.row)
                 if int(data[3]) >= 60:
                     print_error("This game is already finished.")
@@ -112,12 +116,15 @@ class Game:
         Retrieves the progress from the Player object and saves it to Google
         sheets.
         """
+        # Collect game data
         game_data = [self.id, self.username, *self.player.get_progress()]
         if update:
+            # If existing game, find row and update values
             prev_game = self.games_sheet.find(self.id)
             row = prev_game.row
             self.games_sheet.update(f"c{row}:o{row}", [game_data[2:]])
         else:
+            # If new game, add new row to Google sheet
             self.games_sheet.append_row(game_data)
 
     def play_game(self):
