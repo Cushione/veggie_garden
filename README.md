@@ -84,7 +84,7 @@ Another goal is to implement an API in the project.
 #### Press Enter
 ![Press Enter](assets/docs/press-enter.png)
 - Whenever information is displayed that does not require specific input from the user, a "Press Enter" prompt is shown.
-- This prompt only requires the user to press the Enter key when he is ready, to continue to the next screen. 
+- This prompt only requires the user to press the Enter key when they are ready, to continue to the next screen. 
 
 ### Crops
 - The game offers a variety of crops. They all have different prices, growing times, and harvest rewards. 
@@ -119,13 +119,13 @@ This means that it is always worth investing in more expensive crops.
 
 ### New Game
 ![New Game](assets/docs/new-game.png)
-- If a user wants to play a new game, he has to enter a username. The username does not have to be unique and can be reused for every new game.
+- If a user wants to play a new game, the user has to enter a username. The username does not have to be unique and can be reused for every new game.
 - Afterwards, a new unique game ID is generated, that can be used to resume a game in progress.
 - While the game is loading, the storyline of the game is displayed.
 
 ### Resume Game
 ![Resume Game](assets/docs/resume-game.png)
-- If a user wants to resume an existing, unfinished game, he has to enter the game ID.
+- If a user wants to resume an existing, unfinished game, the user has to enter the game ID.
 - If the user enters a valid game ID, the game is loaded and then started.  
 
 ### Game
@@ -140,15 +140,15 @@ This means that it is always worth investing in more expensive crops.
 
 #### Storage
 ![Storage](assets/docs/storage.png)
-- In the storage, the user can get an overview of the seeds he currently has.
+- In the storage, the user can get an overview of the seeds they currently have.
 
 #### Fertiliser
 ![Fertiliser](assets/docs/fertiliser.png)
-- In the fertiliser menu, the user can see which levels of fertiliser he has unlocked.
+- In the fertiliser menu, the user can see which levels of fertiliser they have unlocked.
 - The menu does not show what effect the fertiliser has. The user has to find out how much the new fertiliser helped in the profits after the next season.
 
 #### Store
-![Store](assets/docs/store.png)
+![Store](assets/docs/store.png) 
 - In the store, the user can buy new seeds for the next season.
 
 #### Fields
@@ -164,7 +164,7 @@ This means that it is always worth investing in more expensive crops.
 
 #### Season
 ![Season](assets/docs/season.png)
-- When the user is ready and starts the next season, he can not intervene or go to the preparation anymore.
+- When the user is ready and starts the next season, the user cannot intervene or go to the preparation anymore.
 - During a season the game automatically plays 6 months, from April to September.
 - In every month, the game tends to every unlocked field:
   - if the field has a ripe crop, the crop is harvested and replanted as long as the user has seeds left over.
@@ -173,8 +173,8 @@ This means that it is always worth investing in more expensive crops.
 
 #### End of Season
 ![End of Season](assets/docs/end-of-season.png)
-- At the end of a season, crops are not replanted anymore so the fields are ready for planting in the next season.
-- Every season, a random event can happen that causes a reduction or improvement of the seasonal harvest. A description of the event will be printed above the profits
+- At the end of a season, crops are not replanted anymore, so the fields are ready for planting in the next season.
+- Every season, a random event can happen that causes a reduction or improvement of the seasonal harvest. A description of the event will be printed above the profits.
 - The final profit is displayed to the user and then added to his balance.
 
 #### End Screen
@@ -264,9 +264,9 @@ The steps to deploy an app to Heroku are as follows:
 - Next, add the buildpacks "Heroku/Python" and "Heroku/Nodejs" in that specific order.
 - Afterwards, go to the "Deploy" tab on the app page. 
 - In the "Deployment method" section, select "GitHub" and follow the steps to connect Heroku with GitHub.
-- Then, in the "Connect to GitHub" section, search for the repository that is supposed to be deployed and click on "Connect"
+- Then, in the "Connect to GitHub" section, search for the repository that is supposed to be deployed and click on "Connect".
 - The last step is to either:
-  - enable automatic deployment by clicking on the button "Enable Automatic Deploys" in the "Automatic Deploys" Section 
+  - enable automatic deployment by clicking on the button "Enable Automatic Deploys" in the "Automatic Deploys" Section.
   - deploy a branch manually by selecting the branch and clicking the button "Deploy Branch" in the "Manual deploys" section.
 
 
