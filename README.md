@@ -182,7 +182,7 @@ This means that it is always worth investing in more expensive crops.
 - After the tenth season, the game ends. The end screen displays the final balance to the user.
 
 ### Google Sheets
-![Crops](assets/docs/crops.png)
+![Crops](assets/docs/crops.png)  
 Example Crop sheet from Google Sheets.
 - All the master data in the game is stored in a sheet. On initialisation, the game elements load the relevant data from the sheet.
 - The game progress is regularly saved to a sheet. 
