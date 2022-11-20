@@ -291,7 +291,7 @@ class Text:
         return (
             "Congratulations!",
             f"You have finished the game with €{game.player.money}!",
-            "Go to Highscores to find out if you made it on the list.",
+            "Go to High Scores to find out if you made it on the list.",
         )
 
     HOW_TO_PLAY = (
