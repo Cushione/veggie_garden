@@ -122,7 +122,7 @@ class Player:
         print(
             colored_string(
                 Colors.green,
-                f"\n----- {f'End of Year {year - 1}'.center(17)} -----",
+                f"\n----- {f'End of Year {year}'.center(17)} -----",
             )
         )
         press_enter("Press Enter to see your profits.")
