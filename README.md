@@ -7,7 +7,7 @@ Just like in real gardening, knowledge can only be acquired by trial and error. 
 ![Example](assets/docs/game-example.png)
 
 ## Live Page
-[https://veggie-garden.herokuapp.com/](https://veggie-garden.herokuapp.com/)
+[https://veggie-garden.1441990.xyz](https://veggie-garden.1441990.xyz)
 
 ## Objective
 
@@ -270,7 +270,7 @@ The steps to deploy an app to Heroku are as follows:
   - deploy a branch manually by selecting the branch and clicking the button "Deploy Branch" in the "Manual deploys" section.
 
 
-The live link can be found here: [Veggie Garden](https://veggie-garden.herokuapp.com/)
+The live link can be found here: [Veggie Garden](https://veggie-garden.1441990.xyz)
 
 ### Development process
 
